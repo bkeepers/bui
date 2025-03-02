@@ -20,6 +20,7 @@
     "@rn-primitives/slot": "~1.1.0",
     "@rn-primitives/tooltip": "~1.1.0",
     "@rn-primitives/types": "~1.1.0",
+    "@signalk/client": "^2.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "expo": "^52.0.25",
@@ -46,7 +47,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@signalk/signalk-schema": "^1.7.2",
     "@types/react": "~18.3.12",
+    "json-schema-to-typescript": "^15.0.4",
     "typescript": "^5.3.3"
   },
   "private": true
