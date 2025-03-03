@@ -9,7 +9,7 @@ export type Props = {
   };
 }
 
-export default function MeasurementValue(props?: Props) {
+export function MeasurementValue(props?: Props) {
   return (
     <Tooltip delayDuration={150}>
       <TooltipTrigger className='px-2 pb-0.5 active:opacity-50'>
@@ -30,7 +30,9 @@ function toMeasurement(props?: Props) {
       // FIXME: make configurable
       const value = props.value * 3.28084;
       return `${value.toFixed(1)} ft`;
-    // case "RFC 3339 (UTC)":
+      // case "RFC 3339 (UTC)":
+    default:
+      return `${props.value} ${props.meta?.units}`;
   }
 }
 

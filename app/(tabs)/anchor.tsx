@@ -4,12 +4,13 @@ import { TideWidget } from '~/components/widgets/Tide';
 import { useSignalK } from '~/hooks/useSignalK';
 import { Text } from '~/components/ui/text';
 import { DateTime } from '~/components/DateTime';
+import { Dashboard } from '~/components/Dashboard';
 
 export default function Screen() {
   const data = useSignalK();
 
   return (
-    <View className='gap-3 p-6 bg-secondary/30'>
+    <Dashboard>
       <View>
         <View className='flex-row gap-3'>
           <Text className="text-lg font-semibold m-0 p-0 flex-1">
@@ -25,6 +26,6 @@ export default function Screen() {
         ) : null }
       </View>
       <TideWidget />
-    </View>
+    </Dashboard>
   );
 }
