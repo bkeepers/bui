@@ -7,7 +7,7 @@ export default function Weather() {
 
   return (
     <Dashboard>
-      <JSONTree data={data?.environment} />
+      <JSONTree data={data?.environment ?? {}} />
     </Dashboard>
   )
 }

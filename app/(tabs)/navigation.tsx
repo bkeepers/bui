@@ -7,7 +7,7 @@ export default function Navigation() {
 
   return (
     <Dashboard>
-      <JSONTree data={data?.navigation} />
+      <JSONTree data={data?.navigation ?? {}} />
     </Dashboard>
   )
 }

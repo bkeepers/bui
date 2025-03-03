@@ -11,7 +11,7 @@ export default function Electrical() {
       <Stat title="House" value={data.electrical?.batteries?.house?.voltage} />
       <Stat title="Starter" value={data.electrical?.batteries?.starter?.voltage} />
 
-      <JSONTree data={data?.electrical} />
+      <JSONTree data={data?.electrical ?? {}} />
     </Dashboard>
   )
 }
