@@ -1,5 +1,3 @@
-import '~/global.css';
-
 import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
