@@ -10,6 +10,7 @@ import { ThemeToggle } from '~/components/ThemeToggle';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { VesselHeader } from '~/components/VesselHeader';
 import { SignalKProvider } from '~/hooks/useSignalK';
+import { InspectLink } from '~/components/InspectLink';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -54,10 +55,20 @@ export default function RootLayout() {
         <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
         <Stack>
           <Stack.Screen name="(dashboards)" options={{
-            headerTitle: props => <VesselHeader />,
-            headerRight: () => <ThemeToggle />,
-
+            headerTitle: () => <VesselHeader />,
+            headerRight: () => (
+              <>
+                <InspectLink />
+                <ThemeToggle />
+              </>
+            )
           }} />
+          <Stack.Screen
+            name="inspector"
+            options={{
+              presentation: 'modal'
+            }}
+          />
         </Stack>
         <PortalHost />
       </SignalKProvider>

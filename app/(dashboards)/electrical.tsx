@@ -1,4 +1,3 @@
-import JSONTree from 'react-native-json-tree';
 import { Dashboard } from '~/components/Dashboard';
 import { useSignalK } from '~/hooks/useSignalK';
 import { Text } from '~/components/ui/text';
@@ -57,9 +56,6 @@ export default function Electrical() {
           }
         </View>
       </View>
-
-
-      <JSONTree data={data?.electrical ?? {}} />
     </Dashboard>
   )
 }
