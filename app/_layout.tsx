@@ -9,6 +9,7 @@ import { PortalHost } from '@rn-primitives/portal';
 import { ThemeToggle } from '~/components/ThemeToggle';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { VesselHeader } from '~/components/VesselHeader';
+import { SignalKProvider } from '~/hooks/useSignalK';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -49,15 +50,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack>
-        <Stack.Screen name="(dashboards)" options={{
-          headerTitle: props => <VesselHeader />,
-          headerRight: () => <ThemeToggle />,
+      <SignalKProvider>
+        <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+        <Stack>
+          <Stack.Screen name="(dashboards)" options={{
+            headerTitle: props => <VesselHeader />,
+            headerRight: () => <ThemeToggle />,
 
-        }} />
-      </Stack>
-      <PortalHost />
+          }} />
+        </Stack>
+        <PortalHost />
+      </SignalKProvider>
     </ThemeProvider>
   );
 }

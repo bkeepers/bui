@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Client from '@signalk/client'
 import ObjectPath from 'object-path';
 import type { Vessel } from '~/types/signalk';
@@ -15,8 +15,9 @@ const SIGNALK_SETTINGS = {
   sendCachedValues: true,
 };
 
+export const SignalKContext = createContext<Vessel>({});
 
-export function useSignalK() {
+export function SignalKProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<Vessel>({});
 
   function processDelta(delta: SignalKDeltaMessageSchema) {
@@ -32,6 +33,7 @@ export function useSignalK() {
         });
       });
 
+      // Use spread to create a new object, otherwise React won't detect the change.
       return { ...previousData };
     });
   }
@@ -42,5 +44,13 @@ export function useSignalK() {
     return () => { client.disconnect() }
   }, []);
 
-  return data;
+  return <SignalKContext.Provider value={ data }> { children } </SignalKContext.Provider>;
+}
+
+export function useSignalK() {
+  const context = useContext(SignalKContext);
+  if (context === undefined) {
+		throw new Error('useSignalK must be used within a SignalKProvider');
+	}
+	return context;
 };
