@@ -1,4 +1,4 @@
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 
 export type Props = {
   children?: React.ReactNode;
@@ -6,10 +6,12 @@ export type Props = {
 
 export function Dashboard(props: Props) {
   return (
-    <SafeAreaView className="flex-1">
-      <View className='gap-2 p-4 flex-1'>
-        {props.children}
-      </View>
-    </SafeAreaView>
+    <ScrollView className='flex-1'>
+      <SafeAreaView className="flex-1">
+        <View className="p-4 gap-4">
+          {props.children}
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   )
 }

@@ -1,8 +1,9 @@
 import { Solar } from "~/types/signalk";
 import { Widget } from "../Widget";
-import { Text } from "../ui/text";
 import { MeasurementValue } from "../MeasurementValue";
-import { Stat } from "./Stat";
+import { View } from "react-native";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { ProgressCircle } from 'react-native-svg-charts'
 
 type Props = {
   name: string;
@@ -10,10 +11,33 @@ type Props = {
 }
 
 export function BatteryWidget({name, data}: Props) {
+  console.log(data)
+  const stateOfCharge = data?.capacity?.stateOfCharge?.value ?? 0;
+
+  const chartData = [
+    {value: stateOfCharge * 100, color: '#33CC33', focused: true, text: `${(stateOfCharge * 100).toFixed(1)}%`},
+    {value: (1 - stateOfCharge) * 100, color: '#EEEEEE'},
+  ];
+
+  const icon = [
+    'battery-dead',
+    'battery-half',
+    'battery-full',
+  ][Math.round(stateOfCharge * 3)];
+
   return (
-    <Widget title={name}>
-      <MeasurementValue {...data?.voltage} />
-      { data?.capacity ? <MeasurementValue {...data?.capacity?.stateOfCharge} /> : null }
+    <Widget title={name} className="w-1/4">
+      <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+        <ProgressCircle style={{ height: 60, width: 60 }} progress={stateOfCharge} progressColor={'var(--accent)'} />
+      </View>
+
+      <View className="flex flex-col items-center justify-center">
+        <Ionicons name={icon} size={24} className="text-foreground" />
+        <MeasurementValue {...data?.capacity?.stateOfCharge} />
+        <MeasurementValue {...data?.voltage} className="text-sm" />
+        <MeasurementValue {...data?.current} className="text-sm" />
+        <MeasurementValue {...data?.power} className="text-sm" defaultUnits="w" />
+      </View>
     </Widget>
   )
 }

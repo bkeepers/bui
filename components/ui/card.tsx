@@ -8,7 +8,7 @@ const Card = React.forwardRef<ViewRef, ViewProps>(({ className, ...props }, ref)
   <View
     ref={ref}
     className={cn(
-      'rounded-xl bg-card flex flex-col gap-4 p-6',
+      'rounded-xl bg-card flex flex-col gap-4 p-4',
       className
     )}
     {...props}
@@ -28,7 +28,7 @@ const CardTitle = React.forwardRef<TextRef, React.ComponentPropsWithoutRef<typeo
       aria-level={3}
       ref={ref}
       className={cn(
-        'text-xl text-card-foreground font-medium leading-none tracking-tight',
+        'text-lg text-card-foreground font-medium leading-none tracking-tight',
         className
       )}
       {...props}

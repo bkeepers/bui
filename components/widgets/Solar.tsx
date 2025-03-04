@@ -22,15 +22,3 @@ export function SolarWidget({name, data}: Props) {
     </Widget>
   )
 }
-
-
-//   "yieldToday": {
-//     "meta": {
-//       "units": "J",
-//       "description": "Data should be of type number."
-//     },
-//     "value": 3744000,
-//     "$source": "signalk-victron-ble.E7:22:A6:22:9B:94",
-//     "timestamp": "2025-03-03T19:36:19.652427Z"
-//   }
-// }
