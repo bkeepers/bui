@@ -15,9 +15,9 @@ export default function Electrical() {
     <Dashboard>
       <View>
         <Text className="text-xl leading-loose">Batteries</Text>
-        <View className="flex flex-row gap-3">
+        <View className="grid grid-cols-4 gap-4">
           {
-            Object.entries(data.electrical?.batteries ?? {}).map(([key, data]) => (
+            Object.entries(data?.electrical?.batteries ?? {}).map(([key, data]) => (
               <BatteryWidget key={key} name={key} data={data} />
             ))
           }
@@ -26,7 +26,7 @@ export default function Electrical() {
 
       <View>
         <Text className="text-xl leading-loose">Solar</Text>
-        <View className="grid grid-cols-3 gap-4">
+        <View className="grid grid-cols-4 gap-4">
           {
             Object.entries(data.electrical?.solar ?? {}).map(([key, data]) => (
               <SolarWidget key={key} name={key} data={data} />
@@ -37,7 +37,7 @@ export default function Electrical() {
 
       <View>
         <Text className="text-xl leading-loose">Inverters</Text>
-        <View className="grid grid-cols-3 gap-4">
+        <View className="grid grid-cols-4 gap-4">
           {
             Object.entries(data.electrical?.inverters ?? {}).map(([key, data]) => (
               <InverterWidget key={key} name={key} data={data} />
@@ -49,7 +49,7 @@ export default function Electrical() {
 
       <View>
         <Text className="text-xl leading-loose">Converters</Text>
-        <View className="grid grid-cols-3 gap-4">
+        <View className="grid grid-cols-4 gap-4">
           {
             Object.entries(data.electrical?.converters ?? {}).map(([key, data]) => (
               <ConverterWidget key={key} name={key} data={data} />

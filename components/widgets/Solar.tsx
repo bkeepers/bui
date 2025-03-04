@@ -9,6 +9,7 @@ type Props = {
 }
 
 export function SolarWidget({name, data}: Props) {
+  if(name === "meta") return null;
   return (
     <Widget title={name} status={data.chargingMode?.value}>
       <Text>Voltage</Text>

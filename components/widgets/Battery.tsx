@@ -1,4 +1,4 @@
-import { Solar } from "~/types/signalk";
+import { BatteryKeyedByInstanceId } from "~/types/signalk";
 import { Widget } from "../Widget";
 import { MeasurementValue } from "../MeasurementValue";
 import { View } from "react-native";
@@ -7,11 +7,11 @@ import { ProgressCircle } from 'react-native-svg-charts'
 
 type Props = {
   name: string;
-  data: Solar;
+  data: BatteryKeyedByInstanceId;
 }
 
 export function BatteryWidget({name, data}: Props) {
-  console.log(data)
+  if(name === "meta") return null;
   const stateOfCharge = data?.capacity?.stateOfCharge?.value ?? 0;
 
   const chartData = [
@@ -26,9 +26,9 @@ export function BatteryWidget({name, data}: Props) {
   ][Math.round(stateOfCharge * 3)];
 
   return (
-    <Widget title={name} className="w-1/4">
+    <Widget title={name}>
+      <ProgressCircle style={{ height: 60, width: 60 }} progress={stateOfCharge} progressColor='#33CC33' />
       <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
-        <ProgressCircle style={{ height: 60, width: 60 }} progress={stateOfCharge} progressColor={'var(--accent)'} />
       </View>
 
       <View className="flex flex-col items-center justify-center">

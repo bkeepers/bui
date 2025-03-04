@@ -51,7 +51,7 @@ export default function RootLayout() {
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{
+        <Stack.Screen name="(dashboards)" options={{
           headerTitle: props => <VesselHeader />,
           headerRight: () => <ThemeToggle />,
 
