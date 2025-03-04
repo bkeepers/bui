@@ -8,6 +8,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { PortalHost } from '@rn-primitives/portal';
 import { ThemeToggle } from '~/components/ThemeToggle';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
+import { VesselHeader } from '~/components/VesselHeader';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -50,7 +51,11 @@ export default function RootLayout() {
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{
+          headerTitle: props => <VesselHeader />,
+          headerRight: () => <ThemeToggle />,
+
+        }} />
       </Stack>
       <PortalHost />
     </ThemeProvider>

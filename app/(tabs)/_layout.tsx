@@ -16,10 +16,10 @@ export default function TabLayout() {
     <Tabs className='flex flex-row-reverse bg-secondary'>
       <TabSlot />
       <TabList asChild>
-        <SafeAreaView className='flex gap-4 p-4' style={styles.tabList}>
+        <SafeAreaView className='flex gap-4' style={styles.tabList}>
           {tabs.map(({ name, icon, IconComponent }) => (
-            <TabTrigger className='p-3 bg-card rounded-lg' key={name} name={name} href={`/${name}`}>
-              <IconComponent name={icon} size={24} />
+            <TabTrigger className='p-2 bg-card rounded-lg m-4' key={name} name={name} href={`/${name}`}>
+              <IconComponent name={icon} size={24} className="text-foreground" />
             </TabTrigger>
           ))}
         </SafeAreaView>

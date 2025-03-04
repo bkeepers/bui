@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { Text } from './ui/text';
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -10,29 +11,36 @@ export type Props = {
 }
 
 export function MeasurementValue(props?: Props) {
+  const [value, units] = convertToLocale(props?.value, props?.meta?.units);
+
   return (
     <Tooltip delayDuration={150}>
-      <TooltipTrigger className='px-2 pb-0.5 active:opacity-50'>
-        <Text className='text-xl font-semibold'>{toMeasurement(props)}</Text>
+      <TooltipTrigger>
+        <View className='flex flex-row items-baseline'>
+          <Text className='text-lg font-medium'>{value}</Text>
+          {units ? <Text className='text-xs text-muted-foreground'>{units}</Text> : null}
+        </View>
       </TooltipTrigger>
-      <TooltipContent className='py-2 px-4 shadow'>
+      <TooltipContent className='py-2 px-4 shadow-md'>
         <Text className='native:text-lg'>{props?.meta?.description}</Text>
       </TooltipContent>
     </Tooltip>
   )
 }
 
-function toMeasurement(props?: Props) {
-  if(!props?.value) return "-";
+function convertToLocale(value, units) {
+  if(!value) return ["-"];
 
-  switch (props.meta?.units) {
+  switch (units) {
     case 'm':
       // FIXME: make configurable
-      const value = props.value * 3.28084;
-      return `${value.toFixed(1)} ft`;
-      // case "RFC 3339 (UTC)":
+      return [(value * 3.28084).toFixed(2), "ft"];
+    case 'ratio':
+      return [(value * 100).toFixed(2), "%"];
+    case "J":
+      return [(value / 3600000).toFixed(2), "kWh"];
     default:
-      return `${props.value} ${props.meta?.units}`;
+      return [value, units];
   }
 }
 

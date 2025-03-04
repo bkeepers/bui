@@ -14,7 +14,7 @@ export function TideWidget(props: Tide) {
 
   return (
     <Widget title='Tides'>
-      <View className='flex-row justify-around gap-3'>
+      <View className='flex-row justify-around gap-4'>
         <View className='items-center'>
           <Text className='text-muted-foreground'>High</Text>
           <MeasurementValue {...heightHigh} />
@@ -26,7 +26,7 @@ export function TideWidget(props: Tide) {
         <View className='items-center'>
           <Text className='text-sm text-muted-foreground'>Low</Text>
           <MeasurementValue {...heightLow} />
-          <DateTime value={timeHigh?.value} timeStyle="short" />
+          <DateTime value={timeLow?.value} timeStyle="short" />
         </View>
       </View>
     </Widget>
