@@ -27,9 +27,9 @@ export function BatteryWidget({name, data}: Props) {
 
   return (
     <Widget title={name}>
-      {/* <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
-      <ProgressCircle style={{ height: 60, width: 60 }} progress={stateOfCharge} progressColor='#33CC33' />
-      </View> */}
+      <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+        <ProgressCircle style={{ height: 60, width: 60 }} progress={stateOfCharge} progressColor='#33CC33' />
+      </View>
 
       <View className="flex flex-col justify-center">
         <Ionicons name={icon} size={24} className="text-foreground" />

@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { Braces } from "../lib/icons/Braces";
+import { Braces } from "./icons/Braces";
 
 export function InspectLink() {
   return (

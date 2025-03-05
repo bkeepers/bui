@@ -11,7 +11,7 @@ const SIGNALK_SETTINGS = {
   reconnect: true,
   autoConnect: true,
   sendMeta: "all",
-  deltaStreamBehaviour: 'self',
+  deltaStreamBehaviour: 'none',
   sendCachedValues: true,
 };
 
@@ -28,8 +28,9 @@ export function SignalKProvider({ children }: { children: React.ReactNode }) {
         });
 
         "values" in update && update.values.forEach(({ path, value }) => {
+          const { $source, timestamp } = update;
           const before = ObjectPath.get(previousData, path);
-          ObjectPath.set(previousData, path, { ...before, value });
+          ObjectPath.set(previousData, path, { ...before, value, $source, timestamp });
         });
       });
 
@@ -41,6 +42,8 @@ export function SignalKProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const client = new Client(SIGNALK_SETTINGS)
     client.on('delta', processDelta);
+    // TODO: Make components subscribe to the data they want.
+    client.subscribe([ { context: "vessels.self", subscribe: [{ path: "*", policy: "instant" }] } ]);
     return () => { client.disconnect() }
   }, []);
 

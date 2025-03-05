@@ -9,6 +9,8 @@ type Props = {
 }
 
 export function InverterWidget({name, data}: Props) {
+  if(name === 'meta') return null;
+
   return (
     <Widget title={name} status={data.inverterMode?.value}>
       <Text>Voltage</Text>

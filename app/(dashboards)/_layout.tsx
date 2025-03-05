@@ -6,8 +6,8 @@ import { StyleSheet } from 'react-native';
 
 export default function TabLayout() {
   const tabs = [
-    { name: 'anchor', icon: 'anchor', IconComponent: MaterialIcons },
     { name: 'electrical', icon: 'bolt', IconComponent: MaterialIcons },
+    { name: 'anchor', icon: 'anchor', IconComponent: MaterialIcons },
     { name: 'weather', icon: 'weather-partly-cloudy', IconComponent: MaterialCommunityIcons },
     { name: 'navigation', icon: 'route', IconComponent: MaterialIcons },
   ]

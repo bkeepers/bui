@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
-import { MoonStar } from '~/lib/icons/MoonStar';
-import { Sun } from '~/lib/icons/Sun';
-import { useColorScheme } from '~/lib/useColorScheme';
+import { MoonStar } from './icons/MoonStar';
+import { Sun } from './icons/Sun';
+import { useColorScheme } from '~/hooks/useColorScheme';
 import { cn } from '~/lib/utils';
 
 export function ThemeToggle() {
