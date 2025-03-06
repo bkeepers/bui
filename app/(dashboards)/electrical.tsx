@@ -12,7 +12,7 @@ export default function Electrical() {
 
   return (
     <Dashboard>
-      <View className="flex flex-row flex-wrap gap-4 web:grid web:grid-cols-4">
+      <View className="flex flex-row flex-wrap gap-4">
         <BatteryWidget className="w-1/3" data={data?.electrical?.batteries ?? {}} />
         <SolarWidget className="w-1/3" data={data.electrical?.solar ?? {}} />
         <InverterWidget className="w-1/3" data={data.electrical?.inverters ?? {}} />

@@ -1,4 +1,4 @@
-import { Tabs, TabList, TabTrigger, TabSlot } from 'expo-router/ui';
+import { Tabs } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native';
@@ -6,24 +6,26 @@ import { StyleSheet } from 'react-native';
 
 export default function TabLayout() {
   const tabs = [
-    { name: 'electrical', icon: 'bolt', IconComponent: MaterialIcons },
-    { name: 'anchor', icon: 'anchor', IconComponent: MaterialIcons },
-    { name: 'weather', icon: 'weather-partly-cloudy', IconComponent: MaterialCommunityIcons },
-    { name: 'navigation', icon: 'route', IconComponent: MaterialIcons },
+    { title: 'Home', name: 'index', icon: 'home', IconComponent: MaterialIcons },
+    { title: 'Electrical', name: 'electrical', icon: 'bolt', IconComponent: MaterialIcons },
+    { title: 'Anchor', name: 'anchor', icon: 'anchor', IconComponent: MaterialIcons },
+    { title: 'Weather', name: 'weather', icon: 'weather-partly-cloudy', IconComponent: MaterialCommunityIcons },
+    { title: 'Navigation', name: 'navigation', icon: 'route', IconComponent: MaterialIcons },
   ]
 
   return (
-    <Tabs className='flex flex-row-reverse bg-muted'>
-      <TabSlot />
-      <TabList asChild>
-        <SafeAreaView className='flex' style={styles.tabList}>
-          {tabs.map(({ name, icon, IconComponent }) => (
-            <TabTrigger className='p-2 bg-card rounded-lg m-4' key={name} name={name} href={`/${name}`}>
-              <IconComponent name={icon} size={24} className="text-foreground" />
-            </TabTrigger>
-          ))}
-        </SafeAreaView>
-      </TabList>
+    <Tabs>
+      {
+        tabs.map(({title, name, IconComponent, icon}) => (
+          <Tabs.Screen name={name} options={{
+            title,
+            tabBarIcon: ({ color }) => (
+              <IconComponent name={icon} size={24} color={color} />
+            ),
+            headerShown: false,
+          }} />
+        ))
+      }
     </Tabs>
   );
 }
