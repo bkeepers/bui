@@ -18,8 +18,8 @@ export function Widget({ title, icon, children, className, ...props }: WidgetPro
       {title || icon || status ? (
         <>
           <CardHeader className='flex flex-row items-center gap-3'>
-            { icon }
-            <CardTitle className='text-2xl flex-grow leading-none'>
+            {icon}
+            <CardTitle className='text-lg flex-grow leading-none uppercase'>
               {title}
             </CardTitle>
           </CardHeader>
@@ -43,7 +43,7 @@ export function WidgetData({ data }: WidgetDataProps) {
       {
         data.map(({ name, value }) => (
           <View className="flex-1" key={name}>
-            <Text className="text-xs native:text-base text-muted-foreground font-thin">{ name }</Text>
+            <Text className="text-sm native:text-base text-muted-foreground font-thin">{ name }</Text>
             <MeasurementValue size="sm" {...value} />
           </View>
         ))

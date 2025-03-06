@@ -5,7 +5,9 @@ import { View, ViewProps } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ProgressCircle } from 'react-native-svg-charts'
 import { Text } from '../ui/text';
-import { cssInterop } from "nativewind";
+import { iconWithClassName } from "../icons/iconWithClassName";
+
+iconWithClassName(Ionicons)
 
 export type BatteryWidgetProps = ViewProps & {
   data: { [key: string]: BatteryKeyedByInstanceId }
@@ -40,7 +42,7 @@ export function BatteryPane({name, data}: Props) {
   return (
     <View>
       <View className="flex flex-row items-center gap-2">
-        <Text className="text-xl flex-1">{ name }</Text>
+        <Text className="text-2xl flex-1">{ name }</Text>
         {stateOfCharge && <MeasurementValue {...data?.capacity?.stateOfCharge} size="xl" />}
       </View>
       {stateOfCharge && <ProgressCircle style={{ height: 30, width: 30 }} progress={stateOfCharge ?? 0} progressColor='#10b981' />}

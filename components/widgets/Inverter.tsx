@@ -5,6 +5,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View, ViewProps } from "react-native";
 import { Text } from "../ui/text";
 import { Badge } from "../ui/badge";
+import { iconWithClassName } from "../icons/iconWithClassName";
+
+iconWithClassName(MaterialCommunityIcons)
 
 export type InverterProps = ViewProps & {
   data: { [key: string]: Inverter }

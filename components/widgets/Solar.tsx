@@ -27,7 +27,7 @@ export function SolarPane({name, data, ...props}: ViewProps & { name: string, da
   return (
     <CardContent className="flex-1 flex gap-2">
       <View className="flex flex-row items-center gap-2">
-        <Text className='text-lg leading-none'>
+        <Text className='text-3xl leading-none'>
           {name}
         </Text>
         { status ? <Badge variant="muted"><Text>{status}</Text></Badge> : null }
