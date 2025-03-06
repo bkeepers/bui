@@ -1,23 +1,18 @@
 import { BatteryKeyedByInstanceId } from "~/types/signalk";
-import { Widget } from "../Widget";
+import { Widget, WidgetData } from "../Widget";
 import { MeasurementValue } from "../MeasurementValue";
-import { View } from "react-native";
+import { View, ViewProps } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ProgressCircle } from 'react-native-svg-charts'
+import { Text } from '../ui/text';
+import { cssInterop } from "nativewind";
 
-type Props = {
-  name: string;
-  data: BatteryKeyedByInstanceId;
+export type BatteryWidgetProps = ViewProps & {
+  data: { [key: string]: BatteryKeyedByInstanceId }
 }
 
-export function BatteryWidget({name, data}: Props) {
-  if(name === "meta") return null;
-  const stateOfCharge = data?.capacity?.stateOfCharge?.value ?? 0;
-
-  const chartData = [
-    {value: stateOfCharge * 100, color: '#33CC33', focused: true, text: `${(stateOfCharge * 100).toFixed(1)}%`},
-    {value: (1 - stateOfCharge) * 100, color: '#EEEEEE'},
-  ];
+export function BatteryWidget({data, ...props}: BatteryWidgetProps) {
+  const stateOfCharge = Object.values(data).map(battery => battery.capacity?.stateOfCharge?.value).filter(Boolean)[0] ?? .5;
 
   const icon = [
     'battery-dead',
@@ -26,18 +21,36 @@ export function BatteryWidget({name, data}: Props) {
   ][Math.round(stateOfCharge * 3)];
 
   return (
-    <Widget title={name}>
-      <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
-        <ProgressCircle style={{ height: 60, width: 60 }} progress={stateOfCharge} progressColor='#33CC33' />
-      </View>
-
-      <View className="flex flex-col justify-center">
-        <Ionicons name={icon} size={24} className="text-foreground" />
-        <MeasurementValue {...data?.capacity?.stateOfCharge} />
-        <MeasurementValue {...data?.voltage} className="text-sm" />
-        <MeasurementValue {...data?.current} className="text-sm" />
-        <MeasurementValue {...data?.power} className="text-sm" defaultUnits="w" />
-      </View>
+    <Widget title="Batteries" icon={<Ionicons name={icon} size={24} className="text-foreground" />} {...props}>
+      { Object.entries(data ?? {}).map(([key, value]) => <BatteryPane key={key} name={key} data={value} />) }
     </Widget>
+  );
+}
+
+type Props = {
+  name: string;
+  data: BatteryKeyedByInstanceId;
+}
+
+export function BatteryPane({name, data}: Props) {
+  if(name === "meta") return null;
+
+  const stateOfCharge = data.capacity?.stateOfCharge?.value
+
+  return (
+    <View>
+      <View className="flex flex-row items-center gap-2">
+        <Text className="text-xl flex-1">{ name }</Text>
+        {stateOfCharge && <MeasurementValue {...data?.capacity?.stateOfCharge} size="xl" />}
+      </View>
+      {stateOfCharge && <ProgressCircle style={{ height: 30, width: 30 }} progress={stateOfCharge ?? 0} progressColor='#10b981' />}
+
+      <WidgetData data={[
+        { name: 'Voltage', value: data.voltage },
+        { name: 'Power', value: { ...data.power, defaultUnits: "w" } },
+        { name: 'Current', value: data.current },
+      ]} />
+
+    </View>
   )
 }

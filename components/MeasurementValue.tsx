@@ -1,9 +1,52 @@
 import { View, ViewProps } from 'react-native';
 import { Text } from './ui/text';
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { cn } from '~/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-export type Props = ViewProps & {
+const valueTextVariants = cva(
+  'web:whitespace-nowrap font-medium text-foreground',
+  {
+    variants: {
+      variant: {
+        default: '',
+        muted: 'text-muted-foreground',
+      },
+      size: {
+        sm: 'native:text-xl',
+        default: 'text-xl native:text-2xl',
+        lg: 'text-2xl font-semibold',
+        xl: 'text-3xl font-semibold',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  }
+);
+
+const unitTextVariants = cva(
+  'font-light',
+  {
+    variants: {
+      variant: {
+        default: '',
+        muted: 'text-muted-foreground',
+      },
+      size: {
+        sm: 'text-xs native:text-sm font-thin',
+        default: 'text-sm',
+        lg: 'text-sm',
+        xl: '',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  }
+);
+
+
+export type MeasurementValueProps = ViewProps & Parameters<typeof valueTextVariants>[0] & {
   value?: number;
   meta?: {
     units?: string;
@@ -12,20 +55,23 @@ export type Props = ViewProps & {
   defaultUnits?: string;
 }
 
-export function MeasurementValue({value, meta, defaultUnits, ...props}: Props = {}) {
+export function MeasurementValue({value, meta, defaultUnits, size, variant, ...props}: MeasurementValueProps = {}) {
   const [convertedValue, units] = toPreferredUnit(value, meta?.units ?? defaultUnits);
 
   return (
     <Tooltip delayDuration={150}>
       <TooltipTrigger>
         <View className='flex flex-row items-baseline'>
-          <Text className='font-medium'>{convertedValue}</Text>
-          {units ? <Text className='text-xs text-muted-foreground'>{units}</Text> : null}
+          <Text className={valueTextVariants({ size, variant })}>{convertedValue}</Text>
+          {units ? <Text className={unitTextVariants({ size, variant })}>{units}</Text> : null}
         </View>
       </TooltipTrigger>
-      <TooltipContent className='py-2 px-4 shadow-md'>
-        <Text className='native:text-lg'>{meta?.description}</Text>
-      </TooltipContent>
+      { meta?.description ?
+        <TooltipContent className='py-2 px-4 shadow-md'>
+          <Text className='native:text-lg'>{meta?.description}</Text>
+        </TooltipContent>
+        : null
+      }
     </Tooltip>
   )
 }

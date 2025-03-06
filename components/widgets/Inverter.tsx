@@ -1,32 +1,44 @@
 import { Inverter } from "~/types/signalk";
-import { Widget } from "../Widget";
-import { Text } from "../ui/text";
+import { Widget, WidgetData } from "../Widget";
 import { MeasurementValue } from "../MeasurementValue";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { View, ViewProps } from "react-native";
+import { Text } from "../ui/text";
+import { Badge } from "../ui/badge";
 
-type Props = {
+export type InverterProps = ViewProps & {
+  data: { [key: string]: Inverter }
+}
+
+export function InverterWidget({data, ...props}: InverterProps) {
+  return (
+    <Widget title="Inverters" icon={<MaterialCommunityIcons name="tilde" size={24} className="text-foreground" />} {...props}>
+      { Object.entries(data ?? {}).map(([key, value]) => <InverterPane key={key} name={key} data={value} />) }
+    </Widget>
+  );
+}
+
+type InverterPaneProps = {
   name: string;
   data: Inverter;
 }
 
-export function InverterWidget({name, data}: Props) {
+export function InverterPane({name, data}: InverterPaneProps) {
   if(name === 'meta') return null;
 
   return (
-    <Widget title={name} status={data.inverterMode?.value}>
-      <Text>Voltage</Text>
-      <MeasurementValue {...data.dc?.voltage} />
-      <Text>Current</Text>
-      <MeasurementValue {...data.dc?.current} />
-      <Text>Temperature</Text>
-      <MeasurementValue {...data.dc?.temperature} />
-
-
-      <Text>Apparent Power</Text>
-      <MeasurementValue {...data.ac?.apparentPower} />
-      {/* <Text>Power</Text>
-      <MeasurementValue {...data.panelPower} />
-      <Text>Yield Today</Text>
-      <MeasurementValue {...data.yieldToday} /> */}
-    </Widget>
+    <View>
+      <View className="flex flex-row gap-2">
+        <Text>{name}</Text>
+        <Badge variant="muted"><Text>{data?.inverterMode?.value}</Text></Badge>
+        <View className="flex-1"></View>
+        <MeasurementValue size="xl" {...data.dc?.current} />
+      </View>
+      <WidgetData data={[
+        { name: 'Voltage', value: data.dc?.voltage },
+        { name: 'Power', value: data.ac?.apparentPower },
+        { name: 'Temperature', value: data.dc?.temperature }
+      ]} />
+    </View>
   )
 }

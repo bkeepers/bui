@@ -8,7 +8,7 @@ export function Dashboard(props: Props) {
   return (
     <ScrollView className='flex-1'>
       <SafeAreaView className="flex-1">
-        <View className="p-4 gap-4">
+        <View className="flex-1 p-4 gap-4">
           {props.children}
         </View>
       </SafeAreaView>

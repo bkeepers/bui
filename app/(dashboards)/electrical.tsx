@@ -12,49 +12,11 @@ export default function Electrical() {
 
   return (
     <Dashboard>
-      <View>
-        <Text className="text-xl leading-loose">Batteries</Text>
-        <View className="grid grid-cols-4 gap-4">
-          {
-            Object.entries(data?.electrical?.batteries ?? {}).map(([key, data]) => (
-              <BatteryWidget key={key} name={key} data={data} />
-            ))
-          }
-        </View>
-      </View>
-
-      <View>
-        <Text className="text-xl leading-loose">Solar</Text>
-        <View className="grid grid-cols-4 gap-4">
-          {
-            Object.entries(data.electrical?.solar ?? {}).map(([key, data]) => (
-              <SolarWidget key={key} name={key} data={data} />
-            ))
-          }
-        </View>
-      </View>
-
-      <View>
-        <Text className="text-xl leading-loose">Inverters</Text>
-        <View className="grid grid-cols-4 gap-4">
-          {
-            Object.entries(data.electrical?.inverters ?? {}).map(([key, data]) => (
-              <InverterWidget key={key} name={key} data={data} />
-            ))
-          }
-        </View>
-
-      </View>
-
-      <View>
-        <Text className="text-xl leading-loose">Converters</Text>
-        <View className="grid grid-cols-4 gap-4">
-          {
-            Object.entries(data.electrical?.converters ?? {}).map(([key, data]) => (
-              <ConverterWidget key={key} name={key} data={data} />
-            ))
-          }
-        </View>
+      <View className="flex flex-row flex-wrap gap-4 web:grid web:grid-cols-4">
+        <BatteryWidget className="w-1/3" data={data?.electrical?.batteries ?? {}} />
+        <SolarWidget className="w-1/3" data={data.electrical?.solar ?? {}} />
+        <InverterWidget className="w-1/3" data={data.electrical?.inverters ?? {}} />
+        <ConverterWidget className="w-1/3" data={data.electrical?.converters ?? {}} />
       </View>
     </Dashboard>
   )
