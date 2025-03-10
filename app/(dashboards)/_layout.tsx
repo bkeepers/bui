@@ -5,11 +5,9 @@ import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { PexelsBackground } from '~/components/PexelsBackground';
 import { BlurView } from 'expo-blur';
-import { useHeaderHeight } from '@react-navigation/elements';
 import { useColorScheme } from '~/hooks/useColorScheme';
 
 export default function TabLayout() {
-  const headerHeight = useHeaderHeight();
   const { colorScheme } = useColorScheme();
 
   const tabs = [
@@ -21,7 +19,7 @@ export default function TabLayout() {
   ]
 
   return (
-    <View className="flex-1" style={{ paddingTop: headerHeight}}>
+    <View className="flex-1">
       <PexelsBackground className="absolute inset-0" query="clear sky ocean">
       </PexelsBackground>
       <Tabs screenOptions={{

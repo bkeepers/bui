@@ -11,8 +11,6 @@ import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { VesselHeader } from '~/components/VesselHeader';
 import { SignalKProvider } from '~/hooks/useSignalK';
 import { InspectLink } from '~/components/InspectLink';
-import { BlurView } from 'expo-blur';
-import { StyleSheet } from 'react-native';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -71,9 +69,6 @@ export default function RootLayout() {
               </>
             ),
             headerTransparent: true,
-            headerBackground: () => (
-              <BlurView tint={colorScheme} intensity={75} style={StyleSheet.absoluteFill} />
-            )
           }} />
           <Stack.Screen
             name="inspector"

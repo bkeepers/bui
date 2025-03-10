@@ -27,7 +27,7 @@ export function ThermometerWidget() {
         <ProgressCircle
           className="bg-muted"
           strokeWidth={4}
-          progress={progress}
+          progress={progress ?? 0}
           startAngle={-Math.PI * 0.6}
           endAngle={Math.PI * 0.6}
           style={ { width: dimensions.width - 10, height: dimensions.height - 10 } }
