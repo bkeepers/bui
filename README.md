@@ -1,16 +1,5 @@
-# Starter base
+# Boat UI
 
-A starting point to help you set up your project quickly and use the common components provided by `react-native-reusables`. The idea is to make it easier for you to get started.
+This is a dashboard powered by data from [SignalK](https://signalk.org) for my boat. Someday it might be customizable so you can use it for your boat too.
 
-## Features
-
-- NativeWind v4
-- Dark and light mode
-  - Android Navigation Bar matches mode
-  - Persistent mode
-- Common components
-  - ThemeToggle, Avatar, Button, Card, Progress, Text, Tooltip
-
-<img src="https://github.com/mrzachnugent/react-native-reusables/assets/63797719/42c94108-38a7-498b-9c70-18640420f1bc"
-     alt="starter-base-template"
-     style="width:270px;" />
+![](https://github.com/user-attachments/assets/9a76d20b-7fb8-4e80-89f2-33099fcc7418)
