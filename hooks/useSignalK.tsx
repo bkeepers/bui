@@ -13,6 +13,7 @@ const SIGNALK_SETTINGS = {
   sendMeta: "all",
   deltaStreamBehaviour: 'none',
   sendCachedValues: true,
+  notifications: false,
 };
 
 export const SignalKContext = createContext<Vessel>({});
@@ -43,7 +44,9 @@ export function SignalKProvider({ children }: { children: React.ReactNode }) {
     const client = new Client(SIGNALK_SETTINGS)
     client.on('delta', processDelta);
     // TODO: Make components subscribe to the data they want.
-    client.subscribe([ { context: "vessels.self", subscribe: [{ path: "*", policy: "instant" }] } ]);
+    client.on('connect', () => {
+      client.subscribe([ { context: "vessels.self", subscribe: [{ path: "*", policy: "instant" }] } ]);
+    })
     return () => { client.disconnect() }
   }, []);
 

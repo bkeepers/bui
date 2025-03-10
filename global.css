@@ -4,46 +4,46 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #1f2937;
-    --card: #ffffff;
-    --card-foreground: #1f2937;
-    --popover: #ffffff;
-    --popover-foreground: #1f2937;
-    --primary: #1d4ed8;
-    --primary-foreground: #ffffff;
-    --secondary: #64748b;
-    --secondary-foreground: #ffffff;
-    --muted: #e5e7eb;
-    --muted-foreground: #89909e;
-    --accent: #10b981;
-    --accent-foreground: #ffffff;
-    --destructive: #ef4444;
-    --destructive-foreground: #ffffff;
-    --border: #d1d5db;
-    --input: #d1d5db;
-    --ring: #3b82f6;
+    --background: rgba(255, 255, 255, 1);
+    --foreground: rgba(31, 41, 55, 1);
+    --card: rgba(255, 255, 255, 1);
+    --card-foreground: rgba(31, 41, 55, 1);
+    --popover: rgba(255, 255, 255, 1);
+    --popover-foreground: rgba(31, 41, 55, 1);
+    --primary: rgba(29, 78, 216, 1);
+    --primary-foreground: rgba(255, 255, 255, 1);
+    --secondary: rgba(100, 116, 139, 1);
+    --secondary-foreground: rgba(255, 255, 255, 1);
+    --muted: rgba(229, 231, 235, 0.3);
+    --muted-foreground: rgba(31, 41, 55, 0.8);
+    --accent: rgba(16, 185, 129, 1);
+    --accent-foreground: rgba(255, 255, 255, 1);
+    --destructive: rgba(239, 68, 68, 1);
+    --destructive-foreground: rgba(255, 255, 255, 1);
+    --border: rgba(209, 213, 219, 0.5);
+    --input: rgba(209, 213, 219, 1);
+    --ring: rgba(59, 130, 246, 1);
   }
 
   .dark:root {
-    --background: #1f2937;
-    --foreground: #f9fafb;
-    --card: #1f2937;
-    --card-foreground: #f9fafb;
-    --popover: #1f2937;
-    --popover-foreground: #f9fafb;
-    --primary: #3b82f6;
-    --primary-foreground: #ffffff;
-    --secondary: #64748b;
-    --secondary-foreground: #ffffff;
-    --muted: #374151;
-    --muted-foreground: #a1a5ab;
-    --accent: #10b981;
-    --accent-foreground: #ffffff;
-    --destructive: #ef4444;
-    --destructive-foreground: #ffffff;
-    --border: #374151;
-    --input: #374151;
-    --ring: #3b82f6;
+    --background: rgba(31, 41, 55, 1);
+    --foreground: rgba(249, 250, 251, 1);
+    --card: rgba(31, 41, 55, 1);
+    --card-foreground: rgba(249, 250, 251, 1);
+    --popover: rgba(31, 41, 55, 1);
+    --popover-foreground: rgba(249, 250, 251, 1);
+    --primary: rgba(59, 130, 246, 1);
+    --primary-foreground: rgba(255, 255, 255, 1);
+    --secondary: rgba(100, 116, 139, 1);
+    --secondary-foreground: rgba(255, 255, 255, 1);
+    --muted: rgba(55, 65, 81, 0.8);
+    --muted-foreground: rgba(249, 250, 251, 0.8);
+    --accent: rgba(16, 185, 129, 1);
+    --accent-foreground: rgba(255, 255, 255, 1);
+    --destructive: rgba(239, 68, 68, 1);
+    --destructive-foreground: rgba(255, 255, 255, 1);
+    --border: rgba(55, 65, 81, 0.5);
+    --input: rgba(55, 65, 81, 1);
+    --ring: rgba(59, 130, 246, 1);
   }
 }

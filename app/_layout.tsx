@@ -2,7 +2,7 @@ import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { NAV_THEME } from '~/lib/constants';
 import { useColorScheme } from '~/hooks/useColorScheme';
 import { PortalHost } from '@rn-primitives/portal';
@@ -11,14 +11,22 @@ import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { VesselHeader } from '~/components/VesselHeader';
 import { SignalKProvider } from '~/hooks/useSignalK';
 import { InspectLink } from '~/components/InspectLink';
+import { BlurView } from 'expo-blur';
+import { StyleSheet } from 'react-native';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
-  colors: NAV_THEME.light,
+  colors: {
+    ...NAV_THEME.light,
+    background: "transparent",
+  },
 };
 const DARK_THEME: Theme = {
   ...DarkTheme,
-  colors: NAV_THEME.dark,
+  colors: {
+    ...NAV_THEME.dark,
+    background: "transparent",
+  }
 };
 
 export {
@@ -52,7 +60,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <SignalKProvider>
-        <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+        <StatusBar style={colorScheme} />
         <Stack>
           <Stack.Screen name="(dashboards)" options={{
             headerTitle: () => <VesselHeader />,
@@ -61,6 +69,10 @@ export default function RootLayout() {
                 <InspectLink />
                 <ThemeToggle />
               </>
+            ),
+            headerTransparent: true,
+            headerBackground: () => (
+              <BlurView tint={colorScheme} intensity={75} style={StyleSheet.absoluteFill} />
             )
           }} />
           <Stack.Screen

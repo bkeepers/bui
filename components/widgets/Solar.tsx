@@ -13,7 +13,7 @@ type Props = ViewProps & {
 
 export function SolarWidget({ data, ...props }: Props) {
   return (
-    <Widget title="Solar" icon={<Sun size={24} className="text-foreground" />} {...props}>
+    <Widget title="Solar" icon={<Sun size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <SolarPane key={key} name={key} data={value} />) }
     </Widget>
   )

@@ -11,7 +11,7 @@ export default function Electrical() {
   const data = useSignalK();
 
   return (
-    <Dashboard>
+    <Dashboard className="gap-4">
       <View className="flex flex-row gap-4">
         <BatteryWidget className="flex-1" data={data?.electrical?.batteries ?? {}} />
         <SolarWidget className="flex-1" data={data.electrical?.solar ?? {}} />

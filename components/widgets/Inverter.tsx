@@ -15,7 +15,7 @@ export type InverterProps = ViewProps & {
 
 export function InverterWidget({data, ...props}: InverterProps) {
   return (
-    <Widget title="Inverters" icon={<MaterialCommunityIcons name="tilde" size={24} className="text-foreground" />} {...props}>
+    <Widget title="Inverters" icon={<MaterialCommunityIcons name="tilde" size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <InverterPane key={key} name={key} data={value} />) }
     </Widget>
   );
@@ -31,7 +31,7 @@ export function InverterPane({name, data}: InverterPaneProps) {
 
   return (
     <View>
-      <View className="flex flex-row gap-2">
+      <View className="flex flex-row items-center gap-2">
         <Text>{name}</Text>
         <Badge variant="muted"><Text>{data?.inverterMode?.value}</Text></Badge>
         <View className="flex-1"></View>

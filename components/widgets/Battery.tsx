@@ -23,7 +23,7 @@ export function BatteryWidget({data, ...props}: BatteryWidgetProps) {
   ][Math.round(stateOfCharge * 3)];
 
   return (
-    <Widget title="Batteries" icon={<Ionicons name={icon} size={24} className="text-foreground" />} {...props}>
+    <Widget title="Batteries" icon={<Ionicons name={icon} size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <BatteryPane key={key} name={key} data={value} />) }
     </Widget>
   );
@@ -49,7 +49,7 @@ export function BatteryPane({name, data}: Props) {
 
       <WidgetData data={[
         { name: 'Voltage', value: data.voltage },
-        { name: 'Power', value: { ...data.power, defaultUnits: "w" } },
+        { name: 'Power', value: { ...data.power, fromUnit: "w" } },
         { name: 'Current', value: data.current },
       ]} />
 

@@ -2,20 +2,42 @@ import { View, ViewProps } from 'react-native';
 import { Text } from './ui/text';
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { cva, type VariantProps } from 'class-variance-authority';
+import convert, { Unit } from "convert-units";
+
+// TODO: make configurable
+const settings: Partial<Record<Unit, Unit>> = {
+  m: "ft",
+  J: "kWh",
+  K: "F",
+  Pa: "hPa",
+  "m/s": "knot",
+  "rad": "deg"
+}
+
+const labelAliases: Partial<Record<Unit, string>> = {
+  "F": "°F",
+  "knot": "kn",
+  "deg": "°",
+}
 
 const valueTextVariants = cva(
-  'web:whitespace-nowrap font-medium text-foreground',
+  'web:whitespace-nowrap font-medium text-foreground leading-none tracking-tighter',
   {
     variants: {
       variant: {
         default: '',
-        muted: 'text-muted-foreground',
+        muted: 'text-muted-foreground'
       },
       size: {
         sm: 'native:text-xl',
         default: 'text-xl native:text-2xl',
         lg: 'text-2xl font-semibold',
         xl: 'text-3xl font-semibold',
+        '4xl': 'text-4xl font-semibold',
+        '5xl': 'text-5xl font-semibold',
+        '6xl': 'text-6xl font-semibold',
+        '7xl': 'text-7xl font-semibold',
+        '8xl': 'text-8xl font-semibold',
       },
     },
     defaultVariants: {
@@ -25,7 +47,7 @@ const valueTextVariants = cva(
 );
 
 const unitTextVariants = cva(
-  'font-light',
+  'font-ultralight',
   {
     variants: {
       variant: {
@@ -33,10 +55,15 @@ const unitTextVariants = cva(
         muted: 'text-muted-foreground',
       },
       size: {
-        sm: 'text-xs native:text-sm font-thin',
+        sm: 'text-xs native:text-sm web:font-thin native:font-extralight',
         default: 'text-sm',
         lg: 'text-sm',
         xl: '',
+        '4xl': 'text-lg web:font-thin native:font-extralight',
+        '5xl': 'text-xl web:font-thin native:font-extralight',
+        '6xl': 'text-2xl web:font-thin native:font-extralight',
+        '7xl': 'text-3xl web:font-thin native:font-extralight',
+        '8xl': 'text-4xl web:font-thin native:font-extralight',
       },
     },
     defaultVariants: {
@@ -52,11 +79,17 @@ export type MeasurementValueProps = ViewProps & Parameters<typeof valueTextVaria
     units?: string;
     description: string;
   };
-  defaultUnits?: string;
+  fromUnit?: Unit;
+  decimals?: number;
+  toUnit?: Unit;
 }
 
-export function MeasurementValue({value, meta, defaultUnits, size, variant, ...props}: MeasurementValueProps = {}) {
-  const [convertedValue, units] = toPreferredUnit(value, meta?.units ?? defaultUnits);
+export function MeasurementValue({value, meta, fromUnit, toUnit, size, variant, decimals = 1, ...props}: MeasurementValueProps = {}) {
+  const [convertedValue, units] = toPreferredUnit(value, {
+    from: (meta?.units ?? fromUnit) as Unit,
+    to: toUnit,
+    decimals
+  });
 
   return (
     <Tooltip delayDuration={150}>
@@ -76,25 +109,24 @@ export function MeasurementValue({value, meta, defaultUnits, size, variant, ...p
   )
 }
 
-function toPreferredUnit(value?: number, units?: string): [string, string | undefined] {
-  if(!value) return ["-", undefined];
+export type PreferredUnitOptions = {
+  from?: Unit | "ratio";
+  to?: Unit;
+  decimals?: number;
+}
 
-  switch (units) {
-    case 'm':
-      // FIXME: make configurable
-      return [(value * 3.28084).toFixed(1), "ft"];
+function toPreferredUnit(value?: number, { from, to, decimals = 1 }: PreferredUnitOptions = {}): [string, string | undefined] {
+  if(typeof value !== "number") return ["-", undefined];
+  if(!from) return [value.toFixed(decimals), undefined];
+
+  switch (from) {
     case 'ratio':
-      return [(value * 100).toFixed(1), "%"];
-    case "J":
-      return [(value / 3600000).toFixed(1), "kWh"];
-    case "K":
-      // (K − 273.15) × 9/5 + 32
-      return [((value - 273.15) * 9/5 + 32).toFixed(1), "°F"];
+      return [(value * 100).toFixed(decimals), "%"];
+    case 'w':
+      return [value.toFixed(decimals), "w"];
     default:
-      if(typeof value === 'number') {
-        return [value.toFixed(1), units];
-      }
-      return [value, units];
+      if(!to) to = settings[from] ?? from;
+      return [convert(value).from(from).to(to).toFixed(decimals), labelAliases[to] ?? to];
   }
 }
 

@@ -1,15 +1,12 @@
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View, ViewProps } from "react-native";
+import { cn } from "~/lib/utils";
 
-export type Props = {
-  children?: React.ReactNode;
-}
-
-export function Dashboard(props: Props) {
+export function Dashboard({ children, className, ...props}: ViewProps) {
   return (
-    <ScrollView className='flex-1 bg-muted'>
+    <ScrollView className='flex-1'>
       <SafeAreaView className="flex-1">
-        <View className="flex-1 p-4 gap-4">
-          {props.children}
+        <View className={cn('flex-1 p-4 items-center justify-center', className)} {...props}>
+          {children}
         </View>
       </SafeAreaView>
     </ScrollView>

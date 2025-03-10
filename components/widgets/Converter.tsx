@@ -10,7 +10,7 @@ export type ConverterProps = ViewProps & {
 
 export function ConverterWidget({data, ...props}: ConverterProps) {
   return (
-    <Widget title="Converters" icon={<ArrowLeftRight size={24} className="text-foreground" />} {...props}>
+    <Widget title="Converters" icon={<ArrowLeftRight size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <ConverterPane key={key} name={key} data={value} />) }
     </Widget>
   );
@@ -29,8 +29,8 @@ export function ConverterPane({name, data}: Props) {
         <Badge variant="muted"><Text>{data?.chargingMode?.value}</Text></Badge>
       </View>
       <WidgetData data={[
-        { name: 'Input Voltage', value: { ...data.input?.voltage, defaultUnits: "V" }},
-        { name: 'Output Voltage', value: { ...data.output?.voltage, defaultUnits: "V"}},
+        { name: 'Input Voltage', value: { ...data.input?.voltage, fromUnit: "V" }},
+        { name: 'Output Voltage', value: { ...data.output?.voltage, fromUnit: "V"}},
       ]} />
     </View>
   )
