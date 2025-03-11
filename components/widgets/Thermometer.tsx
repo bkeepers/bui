@@ -1,4 +1,4 @@
-import { ProgressCircle } from 'react-native-svg-charts';
+import { ProgressCircle } from '~/components/ui/charts';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
 import { Widget, WidgetTitle } from "../Widget";
 import { useState } from "react";
@@ -30,7 +30,7 @@ export function ThermometerWidget() {
           progress={progress ?? 0}
           startAngle={-Math.PI * 0.6}
           endAngle={Math.PI * 0.6}
-          style={ { width: dimensions.width - 10, height: dimensions.height - 10 } }
+          style={ { width: dimensions.width - 20, height: dimensions.height - 20 } }
           progressColor="url(#gradient)">
           <Defs key={'gradient'}>
             <LinearGradient

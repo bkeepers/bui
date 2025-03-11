@@ -21,7 +21,7 @@ const labelAliases: Partial<Record<Unit, string>> = {
 }
 
 const valueTextVariants = cva(
-  'web:whitespace-nowrap font-medium text-foreground leading-none tracking-tighter',
+  'web:whitespace-nowrap text-foreground leading-none tracking-tighter',
   {
     variants: {
       variant: {
@@ -31,13 +31,13 @@ const valueTextVariants = cva(
       size: {
         sm: 'native:text-xl',
         default: 'text-xl native:text-2xl',
-        lg: 'text-2xl font-semibold',
-        xl: 'text-3xl font-semibold',
-        '4xl': 'text-4xl font-semibold',
-        '5xl': 'text-5xl font-semibold',
-        '6xl': 'text-6xl font-semibold',
-        '7xl': 'text-7xl font-semibold',
-        '8xl': 'text-8xl font-semibold',
+        lg: 'text-2xl',
+        xl: 'text-3xl',
+        '4xl': 'text-4xl',
+        '5xl': 'text-5xl',
+        '6xl': 'text-6xl',
+        '7xl': 'text-7xl',
+        '8xl': 'text-8xl',
       },
     },
     defaultVariants: {
@@ -73,7 +73,7 @@ const unitTextVariants = cva(
 );
 
 
-export type MeasurementValueProps = ViewProps & Parameters<typeof valueTextVariants>[0] & {
+export type MeasurementValueProps = ViewProps & VariantProps<typeof valueTextVariants> & {
   value?: number;
   meta?: {
     units?: string;

@@ -1,9 +1,10 @@
 import { View, Text } from 'react-native';
 import { Dashboard } from '~/components/Dashboard';
 import { DateTimeWidget } from '~/components/widgets/DateTime';
-import { ForecastWidget, BarometerWidget, MoonWidget, SunWidget, WindWidget } from '~/components/widgets/Forecast';
+import { ForecastWidget, BarometerWidget, MoonWidget, SunWidget } from '~/components/widgets/Forecast';
 import { ThermometerWidget } from "~/components/widgets/Thermometer";
 import { BentoGrid, GridItem } from '~/components/ui/bento'; // Replace with your package import.
+import { WindWidget } from '~/components/widgets/Wind';
 
 export default function Weather() {
   return (

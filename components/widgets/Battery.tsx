@@ -3,7 +3,7 @@ import { Widget, WidgetData } from "../Widget";
 import { MeasurementValue } from "../MeasurementValue";
 import { View, ViewProps } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { ProgressCircle } from 'react-native-svg-charts'
+import { ProgressCircle } from '~/components/ui/charts';
 import { Text } from '../ui/text';
 import { iconWithClassName } from "../icons/iconWithClassName";
 

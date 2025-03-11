@@ -4,9 +4,7 @@ import { MeasurementValue } from "../MeasurementValue";
 import { useSignalK } from "~/hooks/useSignalK";
 import { DateTime } from "../DateTime";
 import { Widget, WidgetLabel } from "../Widget";
-import { CardinalDirection } from "../CardinalDirection";
-import { ProgressCircle } from "react-native-svg-charts";
-import { cssInterop } from "nativewind";
+import { ProgressCircle } from "~/components/ui/charts";
 
 export function DataLabel({ children }: ViewProps) {
   return (
@@ -96,26 +94,6 @@ export function BarometerWidget() {
   )
 }
 
-export function WindWidget() {
-  const forecast = useSignalK().environment?.forecast;
-
-  return (
-    <>
-      {/* <DateTime className="text-xs text-muted-foreground" value={forecast?.time?.value } dateStyle="short" timeStyle="short" /> */}
-
-      <Widget title="Wind">
-        <Text>Wind Direction:</Text>
-        <MeasurementValue {...forecast?.wind?.direction } decimals={0} />
-        <CardinalDirection rad={forecast?.wind?.direction?.value } />
-        <Text>Wind Speed:</Text>
-        <MeasurementValue {...forecast?.wind?.speed } decimals={0} />
-        <Text>Wind Gust:</Text>
-        <MeasurementValue {...forecast?.wind?.gust } decimals={0} />
-      </Widget>
-    </>
-  )
-}
-
 export function SunWidget() {
   const data = useSignalK().environment?.sunlight;
 
@@ -162,16 +140,6 @@ export function SunWidget() {
 
 const moonPhases = [ "🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘" ];
 
-cssInterop(ProgressCircle, {
-  className: {
-    target: false,
-    nativeStyleToProp: {
-      backgroundColor: "backgroundColor",
-      color: "progressColor",
-    }
-  }
-})
-
 export function MoonWidget() {
   const data = useSignalK().environment?.moon;
 
@@ -198,11 +166,11 @@ export function MoonWidget() {
       <View className="flex flex-row items-center justify-between mt-auto">
         <View>
           <WidgetLabel>Rise</WidgetLabel>
-          <DateTime className="text-3xl tracking-tigher" {...data?.times.rise } timeStyle="short" />
+          <DateTime className="text-3xl tracking-tigher" {...data?.times?.rise } timeStyle="short" />
         </View>
         <View className="items-end">
           <WidgetLabel>Set</WidgetLabel>
-          <DateTime className="text-3xl tracking-tigher" {...data?.times.set } timeStyle="short" />
+          <DateTime className="text-3xl tracking-tigher" {...data?.times?.set } timeStyle="short" />
         </View>
       </View>
     </Widget>

@@ -6,5 +6,5 @@ export type CardinalDirectionProps = TextProps & ({ rad: number } | { deg: numbe
 
 export function CardinalDirection({ rad, deg, ...props }: CardinalDirectionProps) {
   if(!deg) deg = rad * 180 / Math.PI;
-  return <Text>{cardinalFromDegree(deg, CardinalSubset.Intercardinal)}</Text>
+  return <Text {...props}>{cardinalFromDegree(deg, CardinalSubset.Intercardinal)}</Text>
 }
