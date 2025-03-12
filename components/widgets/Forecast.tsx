@@ -107,7 +107,7 @@ export function SunWidget() {
         <ProgressCircle
           className="bg-muted text-yellow-500"
           strokeWidth={8}
-          progress={progress}
+          progress={progress || 0}
           startAngle={-Math.PI * 0.5}
           endAngle={Math.PI * 0.5}
           style={ { width: 140, height: 140, marginBottom: -80 } }>
@@ -153,7 +153,7 @@ export function MoonWidget() {
         <ProgressCircle
           className="text-muted bg-muted"
           strokeWidth={4}
-          progress={data?.fraction?.value}
+          progress={data?.fraction?.value || 0}
           startAngle={-Math.PI * 0.8}
           endAngle={Math.PI * 0.8}
           style={ { width: 100, height: 100 } }

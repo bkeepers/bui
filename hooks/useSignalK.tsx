@@ -50,7 +50,7 @@ export function SignalKProvider({ children }: { children: React.ReactNode }) {
     return () => { client.disconnect() }
   }, []);
 
-  return <SignalKContext.Provider value={ data }> { children } </SignalKContext.Provider>;
+  return <SignalKContext.Provider value={ data }>{ children }</SignalKContext.Provider>;
 }
 
 export function useSignalK() {

@@ -1,3 +1,4 @@
+import "@expo/metro-runtime";
 import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -11,6 +12,8 @@ import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { VesselHeader } from '~/components/VesselHeader';
 import { SignalKProvider } from '~/hooks/useSignalK';
 import { InspectLink } from '~/components/InspectLink';
+import { verifyInstallation } from "nativewind";
+import "~/global.css";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -33,6 +36,7 @@ export {
 } from 'expo-router';
 
 export default function RootLayout() {
+  verifyInstallation();
   const hasMounted = React.useRef(false);
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);

@@ -1,6 +1,6 @@
 {
   "name": "bui",
-  "main": "index.js",
+  "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "dev": "expo start -c",
@@ -29,16 +29,16 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "convert-units": "^2.3.4",
-    "expo": "^52.0.25",
+    "expo": "^52.0.38",
     "expo-blur": "^14.0.3",
     "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.4",
     "expo-navigation-bar": "~4.0.7",
-    "expo-router": "~4.0.16",
-    "expo-splash-screen": "~0.29.20",
+    "expo-router": "^4.0.18",
+    "expo-splash-screen": "^0.29.22",
     "expo-status-bar": "~2.0.1",
     "expo-system-ui": "~4.0.7",
-    "lucide-react-native": "^0.378.0",
+    "lucide-react-native": "^0.479.0",
     "moment": "^2.30.1",
     "nativewind": "^4.1.23",
     "object-path": "^0.11.8",
@@ -56,6 +56,7 @@
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.1",
+    "ws": "^8.18.1",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
