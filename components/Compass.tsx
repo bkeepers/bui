@@ -14,7 +14,7 @@ cssInterop(Svg, {
   },
 });
 
-[Circle, Rect, Path, Text].forEach((Component) => {
+[Circle, Rect, Path].forEach((Component) => {
   cssInterop(Component, {
     className: {
       target: "style",
@@ -23,12 +23,21 @@ cssInterop(Svg, {
   });
 });
 
+cssInterop(Text, {
+  className: {
+    target: "style",
+    nativeStyleToProp: {
+      fontSize: true,
+      color: true
+    },
+  }
+})
+
 export function Compass({ rad, fill, ...props }: CompassProps) {
   const ticks = 32;
   const size = 200;
   const stroke = "rgba(0,0,0,0.6)"
   const deg = rad * 180 / Math.PI;
-  // const fill = "rgba(0,0,0,0.6)"
 
   return (
     <Svg viewBox={`0 0 ${size} ${size}`} {...props} strokeWidth={1} strokeLinecap="round">
@@ -43,9 +52,9 @@ export function Compass({ rad, fill, ...props }: CompassProps) {
               key={i}
               cx="50%"
               cy="6.5%"
-              r="1.5"
+              r="1"
               fill={stroke}
-              style={{ opacity: 0.4 }}
+              className="fill-foreground opacity-40"
               transform={`rotate(${deg} ${size/2} ${size/2})`}
             />
           )
@@ -57,15 +66,15 @@ export function Compass({ rad, fill, ...props }: CompassProps) {
           if (i % 4 !== 0) return null
           const deg = 360 / 32 * i;
           const direction = CardinalDirection[i];
-          const cardinal = i % 8 === 0
+          const cardinal = deg % 90 === 0
           return (
             <Text
               key={i}
               x={size / 2}
               y={size * 0.0725}
               textAnchor="middle"
-              fontSize={cardinal ? 16 : 11}
-              color="rgba(0,0,0,0.6)"
+              fontSize={cardinal ? 14 : 10}
+              className={`fill-muted-foreground opacity-80`}
               alignmentBaseline="middle"
               transform={`rotate(${deg} ${size/2} ${size/2})`}
             >
@@ -78,8 +87,8 @@ export function Compass({ rad, fill, ...props }: CompassProps) {
       <G transform={`rotate(${deg} ${size/2} ${size/2})`}>
         <Polygon
           fill={fill}
-          transform={`translate(${(size/2 - 10)}, ${size*.1})` }
-          points="8 0, 15 13.6, 0 13.6"
+          transform={`translate(${(size/2 - 5)}, ${size*.1})` }
+          points="5 0, 9 14, 0 14"
         />
       </G>
     </Svg>
