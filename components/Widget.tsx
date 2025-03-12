@@ -22,7 +22,6 @@ export function Widget({ title, icon, children, className, ...props }: WidgetPro
       {title || icon ? (
         <>
           <WidgetTitle icon={icon}>{ title }</WidgetTitle>
-          <Separator className="bg-muted" />
         </>
       ) : null}
       <CardContent className="flex-1 text-muted">
@@ -59,7 +58,7 @@ export function WidgetData({ data }: WidgetDataProps) {
       {
         data.map(({ name, value }) => (
           <View className="flex-1" key={name}>
-            <Text className="text-sm native:text-base text-muted-foreground font-thin">{ name }</Text>
+            <WidgetLabel>{ name }</WidgetLabel>
             <MeasurementValue size="sm" {...value} />
           </View>
         ))

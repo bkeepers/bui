@@ -6,14 +6,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ProgressCircle } from '~/components/ui/charts';
 import { Text } from '../ui/text';
 import { iconWithClassName } from "../icons/iconWithClassName";
+import { useSignalK } from "~/hooks/useSignalK";
 
 iconWithClassName(Ionicons)
 
-export type BatteryWidgetProps = ViewProps & {
-  data: { [key: string]: BatteryKeyedByInstanceId }
-}
+export function BatteryWidget(props: ViewProps) {
+  const data = useSignalK()?.electrical?.batteries ?? {};
 
-export function BatteryWidget({data, ...props}: BatteryWidgetProps) {
   const stateOfCharge = Object.values(data).map(battery => battery.capacity?.stateOfCharge?.value).filter(Boolean)[0] ?? .5;
 
   const icon = [
@@ -37,7 +36,7 @@ type Props = {
 export function BatteryPane({name, data}: Props) {
   if(name === "meta") return null;
 
-  const stateOfCharge = data.capacity?.stateOfCharge?.value
+  const stateOfCharge = data?.capacity?.stateOfCharge?.value
 
   return (
     <View>
@@ -45,7 +44,6 @@ export function BatteryPane({name, data}: Props) {
         <Text className="text-2xl flex-1">{ name }</Text>
         {stateOfCharge && <MeasurementValue {...data?.capacity?.stateOfCharge} size="xl" />}
       </View>
-      {stateOfCharge && <ProgressCircle style={{ height: 30, width: 30 }} progress={stateOfCharge ?? 0} progressColor='#10b981' />}
 
       <WidgetData data={[
         { name: 'Voltage', value: data.voltage },
@@ -54,5 +52,61 @@ export function BatteryPane({name, data}: Props) {
       ]} />
 
     </View>
+  )
+}
+
+import { Defs, LinearGradient, Stop } from 'react-native-svg';
+import { WidgetTitle } from "../Widget";
+import { useState } from "react";
+import { WidgetLabel } from "../Widget";
+
+export function StateOfChargeWidget() {
+  const data = useSignalK().electrical?.batteries?.house;
+  const [ dimensions, setDimensions ] = useState({ width: 0, height: 0 });
+
+  function onLayout(e) {
+    setDimensions(e.nativeEvent.layout);
+  }
+
+  const progress = data?.capacity?.stateOfCharge?.value;
+
+  return (
+    <Widget onLayout={onLayout} className="rounded-full aspect-square">
+      <View className="absolute inset-0 items-center justify-center">
+        <ProgressCircle
+          className="text-accent bg-muted"
+          strokeWidth={12}
+          progress={progress || 0}
+          startAngle={-Math.PI * 0.9}
+          endAngle={Math.PI * 0.9}
+          style={ { width: dimensions.width - 20, height: dimensions.height - 20 } }
+        />
+      </View>
+      <View className="absolute inset-0 items-center justify-center">
+        <View>
+          <MeasurementValue size="8xl" variant="centered" {...data?.capacity?.stateOfCharge} decimals={0} />
+          <View className="absolute left-0 right-0 top-full justify-center">
+            <WidgetTitle>House</WidgetTitle>
+          </View>
+        </View>
+      </View>
+
+      <View className="items-center pt-10">
+        {/* <View className="flex flex-row gap-2">
+          <View className="items-center">
+            <WidgetLabel>Humidity</WidgetLabel>
+            <MeasurementValue {...forecast?.relativeHumidity } decimals={0} />
+          </View>
+          <View className="items-center">
+            <WidgetLabel>Feels Like</WidgetLabel>
+            <MeasurementValue {...temperature?.feelslike } decimals={0} />
+          </View>
+          <View className="items-center">
+            <WidgetLabel>Dewpoint:</WidgetLabel>
+            <MeasurementValue {...forecast?.temperature?.dewpoint } decimals={0} />
+          </View>
+        </View> */}
+      </View>
+    </Widget>
   )
 }

@@ -6,12 +6,11 @@ import { Sun } from "../icons/Sun";
 import { View, ViewProps } from "react-native";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
+import { useSignalK } from "~/hooks/useSignalK";
 
-type Props = ViewProps & {
-  data: { [key: string]: Solar };
-}
+export function SolarWidget(props: ViewProps) {
+  const data = useSignalK()?.electrical?.solar;
 
-export function SolarWidget({ data, ...props }: Props) {
   return (
     <Widget title="Solar" icon={<Sun size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <SolarPane key={key} name={key} data={value} />) }

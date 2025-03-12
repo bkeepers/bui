@@ -6,14 +6,13 @@ import { View, ViewProps } from "react-native";
 import { Text } from "../ui/text";
 import { Badge } from "../ui/badge";
 import { iconWithClassName } from "../icons/iconWithClassName";
+import { useSignalK } from "~/hooks/useSignalK";
 
 iconWithClassName(MaterialCommunityIcons)
 
-export type InverterProps = ViewProps & {
-  data: { [key: string]: Inverter }
-}
+export function InverterWidget(props: ViewProps) {
+  const data = useSignalK()?.electrical?.inverters;
 
-export function InverterWidget({data, ...props}: InverterProps) {
   return (
     <Widget title="Inverters" icon={<MaterialCommunityIcons name="tilde" size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <InverterPane key={key} name={key} data={value} />) }

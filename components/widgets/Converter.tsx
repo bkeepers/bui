@@ -3,12 +3,11 @@ import { Text } from "../ui/text";
 import { View, ViewProps } from "react-native";
 import { ArrowLeftRight } from "../icons/ArrowLeftRight";
 import { Badge } from "../ui/badge";
+import { useSignalK } from "~/hooks/useSignalK";
 
-export type ConverterProps = ViewProps & {
-  data: { [key: string]: Converter }
-}
+export function ConverterWidget(props: ViewProps) {
+  const data = useSignalK()?.electrical?.converters;
 
-export function ConverterWidget({data, ...props}: ConverterProps) {
   return (
     <Widget title="Converters" icon={<ArrowLeftRight size={20} className="text-foreground" />} {...props}>
       { Object.entries(data ?? {}).map(([key, value]) => <ConverterPane key={key} name={key} data={value} />) }
