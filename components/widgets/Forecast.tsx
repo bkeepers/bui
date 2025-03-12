@@ -37,7 +37,7 @@ export function ForecastWidget() {
   const forecast = useSignalK().environment?.forecast;
 
   return (
-    <Widget title="Forecast">
+    <Widget>
       <View className="absolute inset-0 items-center justify-center">
         <Text className="text-3xl"></Text>
         <Text className="text-8xl">{ emoji[forecast?.weather?.icon?.value] }</Text>
@@ -86,7 +86,7 @@ export function BarometerWidget() {
   const data = useSignalK().environment;
 
   return (
-    <Widget title="Barometer">
+    <Widget>
       <MeasurementValue size="4xl" {...(data?.outside?.pressure ?? data?.forecast?.pressure) } decimals={2} />
 
       <Text>{ data?.barometer?.description?.value }</Text>
@@ -102,7 +102,7 @@ export function SunWidget() {
   const progress = (new Date().getTime() - start) / (end - start);
 
   return (
-    <Widget title="Sun">
+    <Widget>
       <View className="absolute inset-0 items-center justify-center">
         <ProgressCircle
           className="bg-muted text-yellow-500"
@@ -145,7 +145,7 @@ export function MoonWidget() {
 
   const selectedPhase = Math.round(data?.phase?.value * 8);
   return (
-    <Widget title="Moon">
+    <Widget>
       <View className="absolute inset-0 items-center justify-center">
         <Text className="text-center text-8xl leading-tight">{moonPhases[selectedPhase]}</Text>
       </View>
@@ -161,7 +161,7 @@ export function MoonWidget() {
         </ProgressCircle>
       </View>
 
-      <Text className="text-center text-2xl text-muted-foreground">{data?.phaseName?.value}</Text>
+      <Text className="text-center text-muted-foreground">{data?.phaseName?.value}</Text>
 
       <View className="flex flex-row items-center justify-between mt-auto">
         <View>

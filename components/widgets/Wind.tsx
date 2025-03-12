@@ -25,17 +25,14 @@ export function WindWidget() {
       />
 
       <View className="absolute inset-0 items-center justify-center">
-        <WidgetTitle>Wind</WidgetTitle>
-        <View className="mt-4 flex flex-row items-baseline gap-1">
+        <CardinalDirection className="text-2xl" rad={forecast?.wind?.direction?.value } />
+        <View>
+          <MeasurementValue size="6xl" variant="centered" {...{...forecast?.wind?.speed} } decimals={0} />
         </View>
-          <CardinalDirection className="text-6xl" rad={forecast?.wind?.direction?.value } />
-          <View className="ml-4">
-            <MeasurementValue size="6xl" className="ml-8" {...{...forecast?.wind?.speed} } decimals={0} />
-          </View>
-          <View className="flex flex-row items-baseline gap-1">
-            <Text className="text-muted-foreground">Gusting</Text>
-            <MeasurementValue variant="muted" {...forecast?.wind?.gust } decimals={0} />
-          </View>
+        <View className="flex flex-row items-baseline gap-1">
+          <Text className="text-muted-foreground">Gusting</Text>
+          <MeasurementValue variant="muted" {...forecast?.wind?.gust } decimals={0} />
+        </View>
       </View>
     </Widget>
   )

@@ -33,7 +33,7 @@ export function DateTimeWidget(props?: ViewProps) {
   const timeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return (
-    <Widget {...props}>
+    <View {...props}>
       <View className="flex-1 flex flex-row px-4 items-center justify-evenly">
         <View>
           <View className="flex flex-row items-baseline">
@@ -52,6 +52,6 @@ export function DateTimeWidget(props?: ViewProps) {
           <Text className="tracking-tighter text-2xl font-light">{year}</Text>
         </View>
       </View>
-    </Widget>
+    </View>
   );
 }

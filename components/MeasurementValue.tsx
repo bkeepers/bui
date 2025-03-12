@@ -26,13 +26,16 @@ const valueTextVariants = cva(
     variants: {
       variant: {
         default: '',
-        muted: 'text-muted-foreground'
+        muted: 'text-muted-foreground',
+        centered: '',
       },
       size: {
-        sm: 'native:text-xl',
-        default: 'text-xl native:text-2xl',
-        lg: 'text-2xl',
-        xl: 'text-3xl',
+        sm: 'text-sm',
+        default: '',
+        lg: 'text-lg',
+        xl: 'text-xl',
+        '2xl': 'text-2xl',
+        '3xl': 'text-3xl',
         '4xl': 'text-4xl',
         '5xl': 'text-5xl',
         '6xl': 'text-6xl',
@@ -47,23 +50,26 @@ const valueTextVariants = cva(
 );
 
 const unitTextVariants = cva(
-  'font-ultralight',
+  'text-muted-foreground font-ultralight tracking-tighter',
   {
     variants: {
       variant: {
         default: '',
         muted: 'text-muted-foreground',
+        centered: 'absolute left-full bottom-0',
       },
       size: {
-        sm: 'text-xs native:text-sm web:font-thin native:font-extralight',
+        sm: 'text-xs font-extralight',
         default: 'text-sm',
         lg: 'text-sm',
-        xl: '',
-        '4xl': 'text-lg web:font-thin native:font-extralight',
-        '5xl': 'text-xl web:font-thin native:font-extralight',
-        '6xl': 'text-2xl web:font-thin native:font-extralight',
-        '7xl': 'text-3xl web:font-thin native:font-extralight',
-        '8xl': 'text-4xl web:font-thin native:font-extralight',
+        xl: 'font-extralight',
+        '2xl': 'font-extralight',
+        '3xl': 'text-lg font-extralight',
+        '4xl': 'text-xl font-extralight',
+        '5xl': 'text-2xl font-extralight',
+        '6xl': 'text-3xl font-extralight leading-[3rem]',
+        '7xl': 'text-4xl font-extralight leading-[2.8rem]',
+        '8xl': 'text-5xl font-extralight leading-[5rem]',
       },
     },
     defaultVariants: {
@@ -92,7 +98,7 @@ export function MeasurementValue({value, meta, fromUnit, toUnit, size, variant, 
   });
 
   return (
-    <Tooltip delayDuration={150}>
+    <Tooltip>
       <TooltipTrigger>
         <View className='flex flex-row items-baseline'>
           <Text className={valueTextVariants({ size, variant })}>{convertedValue}</Text>

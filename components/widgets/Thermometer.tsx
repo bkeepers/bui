@@ -26,8 +26,8 @@ export function ThermometerWidget() {
       <View className="absolute inset-0 items-center justify-center">
         <ProgressCircle
           className="bg-muted"
-          strokeWidth={4}
-          progress={progress ?? 0}
+          strokeWidth={12}
+          progress={progress || 0}
           startAngle={-Math.PI * 0.6}
           endAngle={Math.PI * 0.6}
           style={ { width: dimensions.width - 20, height: dimensions.height - 20 } }
@@ -46,25 +46,28 @@ export function ThermometerWidget() {
         </ProgressCircle>
 
       </View>
-      <View className="w-full h-full items-center justify-center gap-4">
-        <WidgetTitle icon={<Thermometer size={20} className="text-foreground" />}>Outdoor</WidgetTitle>
-        <View className="pl-4">
-          <MeasurementValue size="8xl" {...temperature} decimals={0} />
+      <View className="absolute inset-0 items-center justify-center">
+        <View className="w-full items-center">
+          <MeasurementValue size="6xl" variant="centered" {...temperature} decimals={0} />
+          <View className="absolute left-0 right-0 top-full items-center">
+            <WidgetTitle>Outdoor</WidgetTitle>
+          </View>
         </View>
-        <View className="flex flex-row gap-2">
+      </View>
+      <View className="w-full h-full items-center justify-end gap-4 pb-3">
+        <View className="flex flex-row gap-6 justify-between">
           <View className="items-center">
-            <WidgetLabel>Humidity</WidgetLabel>
-            <MeasurementValue {...forecast?.relativeHumidity } decimals={0} />
+            <WidgetLabel>Hum</WidgetLabel>
+            <MeasurementValue size="2xl" variant="centered" {...forecast?.relativeHumidity } decimals={0} />
           </View>
           <View className="items-center">
-            <WidgetLabel>Feels Like</WidgetLabel>
-            <MeasurementValue {...temperature?.feelslike } decimals={0} />
+            <WidgetLabel>Feel</WidgetLabel>
+            <MeasurementValue size="2xl" variant="centered" {...temperature?.feelslike } decimals={0} />
           </View>
           <View className="items-center">
-            <WidgetLabel>Dewpoint:</WidgetLabel>
-            <MeasurementValue {...forecast?.temperature?.dewpoint } decimals={0} />
+            <WidgetLabel>Dew</WidgetLabel>
+            <MeasurementValue size="2xl" variant="centered" {...forecast?.temperature?.dewpoint } decimals={0} />
           </View>
-
         </View>
       </View>
     </Widget>
