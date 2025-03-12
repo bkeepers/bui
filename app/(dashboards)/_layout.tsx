@@ -6,9 +6,10 @@ import { StyleSheet } from 'react-native';
 import { PexelsBackground } from '~/components/PexelsBackground';
 import { BlurView } from 'expo-blur';
 import { useColorScheme } from '~/hooks/useColorScheme';
+import { NAV_THEME } from '~/lib/constants';
 
 export default function TabLayout() {
-  const { colorScheme } = useColorScheme();
+  const { colorScheme, theme } = useColorScheme();
 
   const tabs = [
     { title: 'Home', name: 'index', icon: 'home', IconComponent: MaterialIcons },
@@ -20,8 +21,7 @@ export default function TabLayout() {
 
   return (
     <View className="flex-1">
-      <PexelsBackground className="absolute inset-0" query="clear sky ocean">
-      </PexelsBackground>
+      <PexelsBackground className="absolute inset-0" query="clear sky ocean" />
       <Tabs screenOptions={{
         animation: 'fade'
       }}>
@@ -29,6 +29,7 @@ export default function TabLayout() {
           tabs.map(({title, name, IconComponent, icon}) => (
             <Tabs.Screen key={name} name={name} options={{
               title,
+              tabBarInactiveTintColor: theme.muted,
               tabBarIcon: ({ color }) => (
                 <IconComponent name={icon} size={24} color={color} />
               ),
