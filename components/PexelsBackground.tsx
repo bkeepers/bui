@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ViewProps, ImageBackground, View, TouchableWithoutFeedback } from "react-native";
-import { useInterval, useTimeout } from "usehooks-ts";
+import { useInterval } from "usehooks-ts";
+import { useColorScheme } from "~/hooks/useColorScheme";
 import { useSignalK } from "~/hooks/useSignalK";
 
 const PEXELS_API_KEY = "iXaUI4E7teFjgPlHyw7unEoDEVCcoOGBrha0PJdFw7rzgzXwQNIA1joC";
@@ -9,6 +10,8 @@ type WeatherBackgroundProps = ViewProps & {
 };
 
 export function PexelsBackground({ children, ...props }: WeatherBackgroundProps) {
+  const { colorScheme } = useColorScheme()
+
   const sigk = useSignalK()
   const query = [sigk.environment?.forecast?.description?.value ?? "",  "ocean"].join(" ")
 
@@ -41,7 +44,7 @@ export function PexelsBackground({ children, ...props }: WeatherBackgroundProps)
       source={{ uri: data.photos?.[selected]?.src?.original }}
       style={{ backgroundColor: data.photos?.[selected]?.avg_color }}
     >
-      <View className="absolute inset-0 bg-black/20"></View>
+      <View className={`absolute inset-0 ${colorScheme === 'dark' ? 'bg-black/70' : 'bg-black/30'}`}></View>
       {children}
     </ImageBackground>
   );
