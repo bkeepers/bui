@@ -23,7 +23,8 @@ export default function TabLayout() {
     <View className="flex-1">
       <PexelsBackground className="absolute inset-0" query="clear sky ocean" />
       <Tabs screenOptions={{
-        animation: 'fade'
+        animation: 'fade',
+        tabBarStyle: { borderTopWidth: 0 },
       }}>
         {
           tabs.map(({title, name, IconComponent, icon}) => (
