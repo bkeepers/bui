@@ -13,7 +13,10 @@ export function PexelsBackground({ children, ...props }: WeatherBackgroundProps)
   const { colorScheme } = useColorScheme()
 
   const sigk = useSignalK()
-  const query = [sigk.environment?.forecast?.description?.value ?? "",  "ocean"].join(" ")
+  const mode = sigk.environment?.mode?.value
+  const forecast = sigk.environment?.forecast?.description?.value
+
+  const query = [forecast, mode, "ocean"].filter(Boolean).join(" ")
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState(0);
