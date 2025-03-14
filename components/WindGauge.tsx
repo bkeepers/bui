@@ -1,5 +1,5 @@
 import { Svg, SvgProps, Text, Circle, Path, Rect, G, Polygon, Line } from "~/components/ui/svg";
-import { pie, arc } from "d3-shape";
+import { arc } from "d3-shape";
 import Animated, { Extrapolation, interpolate, useAnimatedProps, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
 import { useEffect } from "react";
 
@@ -49,29 +49,32 @@ export function WindGauge({ size = 200, children, ...props }: WindGaugeProps) {
         }
       </G>
 
-      {
-        Array.from(Array(ticks)).map ((_, i) => {
-          const deg = i * 360 / ticks;
-          const major = deg % 30 === 0;
-          const minor = deg % 10 === 0;
+      <G>
+        {
+          Array.from(Array(ticks)).map ((_, i) => {
+            const deg = i * 360 / ticks;
+            const major = deg % 30 === 0;
+            const minor = deg % 10 === 0;
 
-          if(deg < 20 || deg > 340) return;
+            // if(deg < 20 || deg > 340) return;
 
-          return (
-            <Line
-              key={i}
-              x1={size/2}
-              y1={0}
-              x2={size/2}
-              y2={size * (major ? .06 : (minor ? .04 : 0.01))}
-              strokeWidth={major ? 1 : 0.5}
-              className={major ? "stroke-foreground" : "stroke-muted-foreground"}
-              transform={`rotate(${deg} ${size/2} ${size/2})`}
-            />
-          )
-        })
-      }
+            return (
+              <Line
+                key={i}
+                x1={size/2}
+                y1={0}
+                x2={size/2}
+                y2={size * (major ? .06 : (minor ? .04 : 0.01))}
+                strokeWidth={major ? 1 : 0.5}
+                className={major ? "stroke-foreground" : "stroke-muted-foreground"}
+                transform={`rotate(${deg} ${size/2} ${size/2})`}
+              />
+            )
+          })
+        }
+      </G>
 
+      <G>
       {
         Array.from(Array(12)).map((_, i) => {
           const deg = 360 / 12 * i;
@@ -92,24 +95,28 @@ export function WindGauge({ size = 200, children, ...props }: WindGaugeProps) {
           )
         })
       }
+      </G>
 
       {children}
     </Svg>
   )
 }
 
-export function Needle({ rad, size = 200, duration = 1000, ...props }) {
+export function Needle({ rad, size = 200, duration = 2000, ...props }) {
   const deg = useSharedValue(0);
 
   useEffect(() => { deg.value = withTiming(rad * 180 / Math.PI, { duration }) }, [rad]);
 
+  const animatedProps = useAnimatedProps(() => ({
+    transform: `rotate(${deg.value}deg, ${size/2}, ${size/2})`
+  }))
   return (
-    <AnimatedG rotation={deg} originX={size/2} originY={size/2}>
+    <G transform={`rotate(${deg.value}, ${size/2}, ${size/2})`}>
       <Polygon
         className="fill-foreground"
-        transform={`translate(${(size/2 - 5)}, ${size*.06})` }
-        points="7 0, 12 18, 7 14, 0 18"
+        transform={`translate(${(size/2 - 7)}, ${size*.06})` }
+        points="7 0, 13 18, 7 14, 0 18"
       />
-    </AnimatedG>
+    </G>
   )
 }
