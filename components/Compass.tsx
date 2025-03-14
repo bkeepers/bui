@@ -1,37 +1,10 @@
 import { CardinalDirection } from "cardinal-direction";
-import { cssInterop } from "nativewind";
 import * as React from "react"
-import { Svg, SvgProps, Text, Circle, Path, Rect, G, Polygon } from "~/components/ui/svg";
+import { Svg, SvgProps, Text, Circle, G, Polygon } from "~/components/ui/svg";
 
 export type CompassProps = SvgProps & {
   size?: number;
 }
-
-cssInterop(Svg, {
-  className: {
-    target: "style",
-    nativeStyleToProp: { width: true, height: true }
-  },
-});
-
-[Circle, Rect, Path].forEach((Component) => {
-  cssInterop(Component, {
-    className: {
-      target: "style",
-      nativeStyleToProp: { fill: true, stroke: true, strokeWidth: true }
-    },
-  });
-});
-
-cssInterop(Text, {
-  className: {
-    target: "style",
-    nativeStyleToProp: {
-      fontSize: true,
-      color: true
-    },
-  }
-})
 
 export function Compass({ rad, fill, children, size = 200, ...props }: CompassProps) {
   const ticks = 32;

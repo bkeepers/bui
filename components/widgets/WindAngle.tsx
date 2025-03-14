@@ -10,17 +10,18 @@ import { useSignalK } from '~/hooks/useSignalK';
 export function WindAngleWidget() {
   const data = useSignalK();
 
-  const rad = data?.navigation?.headingTrue?.value ?? 0;
+  const heading = data?.navigation?.headingTrue?.value ?? 0;
+  const windAngle = data?.environment?.wind?.angleApparent?.value ?? 0;
 
   return (
     <Widget className="rounded-full aspect-square p-0">
-      <AnimatedRotation rad={-rad} className="absolute inset-0 flex items-center justify-center">
+      <AnimatedRotation rad={-heading} className="absolute inset-0 flex items-center justify-center">
         <Compass className="w-full aspect-square"></Compass>
       </AnimatedRotation>
 
       <View className="absolute inset-10 flex items-center justify-center border rounded-full border-slate-500/30">
         <WindGauge size={200}>
-          <Needle rad={data?.environment?.wind?.angleApparent?.value ?? 0} />
+          <Needle rad={windAngle} />
         </WindGauge>
       </View>
 
