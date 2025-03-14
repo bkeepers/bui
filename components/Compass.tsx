@@ -1,10 +1,10 @@
 import { CardinalDirection } from "cardinal-direction";
 import { cssInterop } from "nativewind";
 import * as React from "react"
-import { Svg, SvgProps, Text, Circle, Path, Rect, Defs, Mask, G, Polygon } from "react-native-svg"
+import { Svg, SvgProps, Text, Circle, Path, Rect, G, Polygon } from "~/components/ui/svg";
 
 export type CompassProps = SvgProps & {
-  rad: number
+  size?: number;
 }
 
 cssInterop(Svg, {
@@ -33,11 +33,9 @@ cssInterop(Text, {
   }
 })
 
-export function Compass({ rad, fill, ...props }: CompassProps) {
+export function Compass({ rad, fill, children, size = 200, ...props }: CompassProps) {
   const ticks = 32;
-  const size = 200;
   const stroke = "rgba(0,0,0,0.6)"
-  const deg = rad * 180 / Math.PI;
 
   return (
     <Svg viewBox={`0 0 ${size} ${size}`} {...props} strokeWidth={1} strokeLinecap="round">
@@ -73,7 +71,8 @@ export function Compass({ rad, fill, ...props }: CompassProps) {
               x={size / 2}
               y={size * 0.0725}
               textAnchor="middle"
-              fontSize={cardinal ? 14 : 10}
+              fontSize={cardinal ? 10 : 8}
+              fontWeight={cardinal ? "bold" : "normal"}
               className={`fill-muted-foreground opacity-80`}
               alignmentBaseline="middle"
               transform={`rotate(${deg} ${size/2} ${size/2})`}
@@ -84,13 +83,27 @@ export function Compass({ rad, fill, ...props }: CompassProps) {
         })
       }
 
-      <G transform={`rotate(${deg} ${size/2} ${size/2})`}>
-        <Polygon
-          fill={fill}
-          transform={`translate(${(size/2 - 5)}, ${size*.1})` }
-          points="5 0, 9 14, 0 14"
-        />
-      </G>
+      {children}
     </Svg>
+  )
+}
+
+export type CompassNeedleProps = SvgProps & {
+  rad: number;
+  fill: string;
+  size: number;
+}
+
+export function CompassNeedle({ rad, fill, size = 200, ...props }: CompassNeedleProps) {
+  const deg = rad * 180 / Math.PI;
+
+  return(
+    <G transform={`rotate(${deg} ${size/2} ${size/2})`}>
+      <Polygon
+        fill={fill}
+        transform={`translate(${(size/2 - 5)}, ${size*.1})` }
+        points="5 0, 9 14, 0 14"
+      />
+    </G>
   )
 }

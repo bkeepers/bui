@@ -1,6 +1,4 @@
 import { Dashboard } from '~/components/Dashboard';
-import { useSignalK } from '~/hooks/useSignalK';
-import { Text } from '~/components/ui/text';
 import { SolarWidget } from '~/components/widgets/Solar';
 import { BatteryWidget, StateOfChargeWidget } from '~/components/widgets/Battery';
 import { InverterWidget } from '~/components/widgets/Inverter';

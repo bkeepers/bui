@@ -21,7 +21,7 @@ const labelAliases: Partial<Record<Unit, string>> = {
 }
 
 const valueTextVariants = cva(
-  'web:whitespace-nowrap text-foreground leading-none tracking-tighter',
+  'web:whitespace-nowrap text-foreground leading-none tracking-tighter tabular-nums',
   {
     variants: {
       variant: {
@@ -78,7 +78,6 @@ const unitTextVariants = cva(
   }
 );
 
-
 export type MeasurementValueProps = ViewProps & VariantProps<typeof valueTextVariants> & {
   value?: number;
   meta?: {
@@ -88,9 +87,10 @@ export type MeasurementValueProps = ViewProps & VariantProps<typeof valueTextVar
   fromUnit?: Unit;
   decimals?: number;
   toUnit?: Unit;
+  hideLabel?: boolean;
 }
 
-export function MeasurementValue({value, meta, fromUnit, toUnit, size, variant, decimals = 1, ...props}: MeasurementValueProps = {}) {
+export function MeasurementValue({value, meta, fromUnit, toUnit, size, variant, decimals = 1, hideLabel = false, ...props}: MeasurementValueProps = {}) {
   const [convertedValue, units] = toPreferredUnit(value, {
     from: (meta?.units ?? fromUnit) as Unit,
     to: toUnit,
@@ -102,7 +102,7 @@ export function MeasurementValue({value, meta, fromUnit, toUnit, size, variant, 
       <TooltipTrigger>
         <View className='flex flex-row items-baseline'>
           <Text className={valueTextVariants({ size, variant })}>{convertedValue}</Text>
-          {units ? <Text className={unitTextVariants({ size, variant })}>{units}</Text> : null}
+          {!hideLabel && units ? <Text className={unitTextVariants({ size, variant })}>{units}</Text> : null}
         </View>
       </TooltipTrigger>
       { meta?.description ?
@@ -134,13 +134,4 @@ function toPreferredUnit(value?: number, { from, to, decimals = 1 }: PreferredUn
       if(!to) to = settings[from] ?? from;
       return [convert(value).from(from).to(to).toFixed(decimals), labelAliases[to] ?? to];
   }
-}
-
-const format = new Intl.DateTimeFormat('en-US', {
-  timeStyle: 'short'
-});
-
-function formatDate(date: string) {
-  if (!date) return "-";
-  return format.format(new Date(date));
 }

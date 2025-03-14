@@ -2,27 +2,21 @@ import { useSignalK } from "~/hooks/useSignalK";
 import { Widget, WidgetLabel, WidgetTitle } from "../Widget";
 import { MeasurementValue } from "../MeasurementValue";
 import { CardinalDirection } from "../CardinalDirection";
-import { Compass } from "../Compass";
+import { Compass, CompassNeedle } from "../Compass";
 import { View } from "react-native";
 import { Text } from "~/components/ui/text";
-import { useInterval } from "usehooks-ts";
-import { useState } from "react";
 
 export function WindWidget() {
-  const forecast = useSignalK().environment?.forecast;
-  const [v, setV] = useState(0);
-
-  useInterval(() => setV(v => {
-    return (v + 0.05) % 15
-  }), 100);
+  const forecast = useSignalK()?.environment?.forecast;
 
   return (
     <Widget className="rounded-full aspect-square p-0">
-      <Compass
-        className="w-full aspect-square"
-        rad={forecast?.wind?.direction?.value}
-        fill={colorForValue(forecast?.wind?.speed?.value)}
-      />
+      <Compass className="w-full aspect-square">
+        <CompassNeedle
+          rad={forecast?.wind?.direction?.value}
+          fill={colorForValue(forecast?.wind?.speed?.value)}
+        />
+      </Compass>
 
       <View className="absolute inset-0 items-center justify-center">
         <CardinalDirection className="text-2xl" rad={forecast?.wind?.direction?.value } />
