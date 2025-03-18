@@ -1,155 +1,95 @@
 import { useSignalK } from "~/hooks/useSignalK";
-import { MeasurementValue } from "../MeasurementValue";
 import { Widget, WidgetTitle } from "../Widget";
 import { Text } from "~/components/ui/text";
+import { View, StyleSheet } from "react-native";
 
 export function PositionWidget() {
   const position = useSignalK()?.navigation?.position;
-  const coords = formatcoords({ lat: position?.value?.latitude, lng: position?.value?.longitude});
+  const lat = Coordinate.lat(position?.value?.latitude ?? NaN);
+  const lon = Coordinate.lon(position?.value?.longitude ?? NaN);
 
   return (
     <Widget>
-      <WidgetTitle>Position</WidgetTitle>
-      <Text>
-        { coords.format('FFf') }
-      </Text>
+      <WidgetTitle className="text-center">Position</WidgetTitle>
+      <View className="flex-1 items-center justify-center">
+        <View className="flex-row gap-2">
+          <Text style={styles.coordinate} className="text-4xl font-semibold tracking-tighter">{ lat.format('DD mm') }</Text>
+          <Text className="text-2xl w-8">{ lat.format('X') }</Text>
+        </View>
+        <View className="flex-row gap-2">
+          <Text style={styles.coordinate} className="text-4xl font-semibold tracking-tighter">{ lon.format('DD mm') }</Text>
+          <Text className="text-2xl w-8">{ lon.format('X') }</Text>
+        </View>
+      </View>
     </Widget>
   )
 }
 
+const styles = StyleSheet.create({
+  coordinate: {
+   fontVariant: ['tabular-nums']
+  }
+})
 
-// https://github.com/nerik/formatcoords
-
-var shortFormats = {
-	'FFf' : 'DD MM ss X',
-	'Ff' : 'DD mm X',
-	'f': 'dd X'
-};
-
-var units = {
-	degrees: '°',
-	minutes: '′',
-	seconds: '″',
-};
-
-
-class Coords {
-  constructor(...args) {
-    if (!args.length) {
-      throw new Error('no arguments');
-    }
-    else if (args[0].lat && args[0].lng) {
-      this.lat = args[0].lat;
-      this.lon = args[0].lng;
-    }
-    else if (typeof args[0] === "string") {
-      var strarr = args[0].split(",");
-      this.lat = parseFloat(strarr[0].trim());
-      this.lon = parseFloat(strarr[1].trim());
-    }
-    else if (Object.prototype.toString.call(args[0]) === "[object Array]" ) {
-      var arr = args[0];
-      if (args[1] === true) {
-        this.lat = arr[1];
-        this.lon = arr[0];
-      } else {
-        this.lat = arr[0];
-        this.lon = arr[1];
-      }
-    }
-    else if (args[2] === true) {
-      this.lat = args[1];
-      this.lon = args[0];
-    }
-    else {
-      this.lat = args[0];
-      this.lon = args[1];
-    }
-
-    this.compute();
-  };
-
-  compute() {
-    this.north = this.lat > 0;
-    this.east = this.lon > 0;
-    this.latValues = computeFor(this.lat);
-    this.lonValues = computeFor(this.lon);
-
-    function computeFor(initValue) {
-      var values = {};
-      values.initValue = initValue;
-      values.degrees = Math.abs(initValue);
-      values.degreesInt = Math.floor(values.degrees);
-      values.degreesFrac = values.degrees - values.degreesInt;
-      values.secondsTotal = 3600 * values.degreesFrac;
-      values.minutes = values.secondsTotal / 60;
-      values.minutesInt = Math.floor(values.minutes);
-      values.seconds = values.secondsTotal - (values.minutesInt * 60);
-      return values;
-    }
-  };
-
-
-  format(format, options) {
-    if (typeof format === 'object') {
-      var submittedFormat = format
-      options = format;
-      format = 'FFf';
-    }
-    if (typeof format === 'undefined'){
-      format = 'FFf';
-    }
-    if (typeof options === 'undefined') {
-      options = {};
-    }
-    if (typeof options === 'string'){
-      var submittedString = options;
-      options = {
-        latLonSeparator: submittedString
-      }
-    }
-    if (typeof options.latLonSeparator === 'undefined') {
-      options.latLonSeparator = ' ';
-    }
-    if(typeof options.decimalPlaces === 'undefined') {
-      options.decimalPlaces = 5;
-    }
-    else {
-      options.decimalPlaces = parseInt(options.decimalPlaces);
-    }
-
-
-    if ( Object.keys(shortFormats).indexOf(format) > -1 ) {
-      format = shortFormats[format];
-    }
-
-    var lat = formatFor(this.latValues, (this.north) ? 'N' : 'S' );
-    var lon = formatFor(this.lonValues, (this.east) ? 'E' : 'W' );
-
-    function formatFor(values, X) {
-      var formatted = format;
-      formatted = formatted.replace(/DD/g, values.degreesInt+units.degrees);
-      formatted = formatted.replace(/dd/g, values.degrees.toFixed(options.decimalPlaces)+units.degrees);
-      formatted = formatted.replace(/D/g, values.degreesInt);
-      formatted = formatted.replace(/d/g, values.degrees.toFixed(options.decimalPlaces));
-      formatted = formatted.replace(/MM/g, values.minutesInt+units.minutes);
-      formatted = formatted.replace(/mm/g, values.minutes.toFixed(options.decimalPlaces)+units.minutes);
-      formatted = formatted.replace(/M/g, values.minutesInt);
-      formatted = formatted.replace(/m/g, values.minutes.toFixed(options.decimalPlaces));
-      formatted = formatted.replace(/ss/g, values.seconds.toFixed(options.decimalPlaces)+units.seconds);
-      formatted = formatted.replace(/s/g, values.seconds.toFixed(options.decimalPlaces));
-
-      formatted = formatted.replace(/-/g, (values.initValue<0) ? '-' : '');
-
-      formatted = formatted.replace(/X/g, X);
-
-      return formatted;
-    }
-
-    return lat + options.latLonSeparator + lon;
-  };
+type CoordinateFormatOptions = {
+  precision: number,
+  units: { degrees: string, minutes: string, seconds: string }
 }
 
-function formatcoords(...args) {
-	return new Coords(...args);
+// Adapted from https://github.com/nerik/formatcoords
+class Coordinate {
+  static lat(value: number) {
+    return new Coordinate(value, ['N', 'S']);
+  }
+
+  static lon(value: number) {
+    return new Coordinate(value, ['E', 'W']);
+  }
+
+  constructor(public value: number, public directions: [string, string]) {
+  }
+
+  get degrees() {
+    return Math.abs(this.value);
+  }
+
+  get minutes() {
+    return (this.degrees % 1) * 60;
+  }
+
+  get seconds() {
+    return (this.minutes % 1) * 60;
+  }
+
+  get direction() {
+    return this.directions[this.value > 0 ? 0 : 1];
+  }
+
+  format(format: string, options?: CoordinateFormatOptions) {
+    if(isNaN(this.value)) return;
+
+    const {
+      precision = 3,
+      units = { degrees: '°', minutes: '′', seconds: '″' }
+    } = options ?? {};
+
+    const formats: [RegExp, () => string][] = [
+      [/DD/g, () => [Math.floor(this.degrees), units.degrees].join('') ],
+      [/dd/g, () => [this.degrees.toFixed(precision), units.degrees].join('') ],
+      [/D/g, () => Math.floor(this.degrees).toString()],
+      [/d/g, () => this.degrees.toFixed(precision)],
+      [/MM/g, () => [Math.floor(this.minutes), units.minutes].join('') ],
+      [/mm/g, () => [this.minutes.toFixed(precision), units.minutes].join('') ],
+      [/M/g, () => Math.floor(this.minutes).toString()],
+      [/m/g, () => this.minutes.toFixed(precision)],
+      [/ss/g, () => [this.seconds.toFixed(precision), units.seconds].join('') ],
+      [/s/g, () => this.seconds.toFixed(precision)],
+      [/-/g, () => this.value <0  ? '-' : ''],
+      [/X/g, () => this.direction],
+    ]
+
+    return formats.reduce((result, [regex, replacer]) => {
+      return result.replace(regex, replacer);
+    }, format);
+  }
 }
