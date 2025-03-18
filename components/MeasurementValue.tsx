@@ -28,6 +28,7 @@ const valueTextVariants = cva(
         default: '',
         muted: 'text-muted-foreground',
         centered: '',
+        inverse: 'text-background',
       },
       size: {
         sm: 'text-sm',
@@ -57,6 +58,7 @@ const unitTextVariants = cva(
         default: '',
         muted: 'text-muted-foreground',
         centered: 'absolute left-full bottom-0',
+        inverse: 'text-background',
       },
       size: {
         sm: 'text-xs font-extralight',
@@ -82,7 +84,7 @@ export type MeasurementValueProps = ViewProps & VariantProps<typeof valueTextVar
   value?: number;
   meta?: {
     units?: string;
-    description: string;
+    description?: string;
   };
   fromUnit?: Unit;
   decimals?: number;

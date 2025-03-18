@@ -47,11 +47,11 @@ export function SignalKProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const client = new Client(SIGNALK_SETTINGS)
     client.on('delta', processDelta);
-    // TODO: Make components subscribe to the data they want.
 
     async function load() {
       const api = await client.API()
       setData(await api.self())
+      // TODO: Make components subscribe to the data they want.
       client.subscribe([ { context: "vessels.self", subscribe: [{ path: "*", policy: "instant" }] } ]);
     }
 
@@ -70,3 +70,18 @@ export function useSignalK() {
 	}
 	return context;
 };
+
+
+export function useSignalKResource<T>(path: string, defaultValue?: Partial<T>) {
+  const [data, setData] = useState(defaultValue)
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`http://pi.local:3000/signalk/v2/api/resources/${path}`)
+      const json = await res.json()
+      setData(json)
+    })();
+  }, [path])
+
+  return data;
+}
