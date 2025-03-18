@@ -5,9 +5,6 @@ import { Text } from '~/components/ui/text';
 import { SpeedWidget } from '~/components/widgets/Speed';
 import { DepthWidget } from '~/components/widgets/Depth';
 import { PositionWidget } from '~/components/widgets/PositionWidget';
-import { useSignalK } from '~/hooks/useSignalK';
-import { Widget } from '~/components/Widget';
-import { Badge } from '~/components/ui/badge';
 
 export default function Navigation() {
   return (
@@ -29,31 +26,15 @@ export default function Navigation() {
           <PositionWidget />
         </GridItem>
 
-        <GridItem widthSpan={2} heightSpan={1}>
-          <StateWidget />
-        </GridItem>
-
         <GridItem>
           <Text>
             TODO:
             - courseOverGroundTrue
             - courseOverGroundMagnetic
             - leewayAngle
-            - state
           </Text>
         </GridItem>
       </BentoGrid>
     </Dashboard>
-  )
-}
-
-
-export function StateWidget() {
-  const data = useSignalK()
-
-  return (
-    <Widget>
-      <Badge className="text-4xl"><Text>{ data?.navigation?.state?.value }</Text></Badge>
-    </Widget>
   )
 }
