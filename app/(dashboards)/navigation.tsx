@@ -25,15 +25,6 @@ export default function Navigation() {
         <GridItem widthSpan={2} heightSpan={1}>
           <PositionWidget />
         </GridItem>
-
-        <GridItem>
-          <Text>
-            TODO:
-            - courseOverGroundTrue
-            - courseOverGroundMagnetic
-            - leewayAngle
-          </Text>
-        </GridItem>
       </BentoGrid>
     </Dashboard>
   )

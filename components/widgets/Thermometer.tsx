@@ -2,18 +2,17 @@ import { ProgressCircle } from '~/components/ui/charts';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
 import { Widget, WidgetTitle } from "../Widget";
 import { useState } from "react";
-import { View } from 'react-native';
+import { LayoutChangeEvent, View } from 'react-native';
 import { MeasurementValue } from '../MeasurementValue';
 import { WidgetLabel } from "../Widget";
 import { useSignalK } from '~/hooks/useSignalK';
-import { Thermometer } from "../icons";
 
 export function ThermometerWidget() {
   const forecast = useSignalK().environment?.forecast;
   const temperature = forecast?.temperature;
   const [ dimensions, setDimensions ] = useState({ width: 0, height: 0 });
 
-  function onLayout(e) {
+  function onLayout(e: LayoutChangeEvent) {
     setDimensions(e.nativeEvent.layout);
   }
 

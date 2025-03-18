@@ -103,7 +103,7 @@ export function MeasurementValue({value, meta, fromUnit, toUnit, size, variant, 
     <Tooltip>
       <TooltipTrigger>
         <View className='flex flex-row items-baseline'>
-          <Text className={valueTextVariants({ size, variant })}>{convertedValue}</Text>
+          <Text className={valueTextVariants({ size, variant })} style={{fontVariant: ['tabular-nums']}}>{convertedValue}</Text>
           {!hideLabel && units ? <Text className={unitTextVariants({ size, variant })}>{units}</Text> : null}
         </View>
       </TooltipTrigger>

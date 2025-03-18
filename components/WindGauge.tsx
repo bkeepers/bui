@@ -1,4 +1,4 @@
-import { Svg, SvgProps, Text, Circle, Path, Rect, G, Polygon, Line, GProps } from "~/components/ui/svg";
+import { Svg, SvgProps, Text, Path, G, Polygon, Line, GProps } from "~/components/ui/svg";
 import { arc } from "d3-shape";
 import Animated, { useAnimatedProps, useSharedValue, withTiming, Easing } from "react-native-reanimated";
 import { useEffect } from "react";
@@ -42,7 +42,7 @@ export function WindGauge({ size = 200, children, ...props }: WindGaugeProps) {
                   <Path
                       className={shape.className}
                       key={index}
-                      d={shape.path}
+                      d={shape.path ?? ""}
                   />
               )
           })
@@ -56,7 +56,7 @@ export function WindGauge({ size = 200, children, ...props }: WindGaugeProps) {
             const major = deg % 30 === 0;
             const minor = deg % 10 === 0;
 
-            // if(deg < 20 || deg > 340) return;
+            if(deg < 20 || deg > 340) return;
 
             return (
               <Line
