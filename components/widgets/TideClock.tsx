@@ -1,6 +1,6 @@
 import { useSignalKResource } from "~/hooks/useSignalK";
 import { Widget } from "../Widget";
-import { Circle, Defs, FeDropShadow, Filter, G, Line, Path, Svg, Text, TextPath, Use } from "~/components/ui/svg";
+import { Circle, Defs, G, Line, Path, Svg, Text, TextPath, Use } from "~/components/ui/svg";
 import { View } from "react-native";
 import { MeasurementValue } from "../MeasurementValue";
 import { DateTime } from "~/components/DateTime";
@@ -42,33 +42,22 @@ export function TideClockWidget({ size = 200 }) {
         <Defs>
           <Path
             id="highCurve"
-            fill="none"
             d={`M -${textRadius} 0 A ${textRadius} ${textRadius} 0 1 1 ${textRadius} 0`}
-            transform={`translate(${radius},${radius})`}
           />
           <Path
             id="lowCurve"
-            fill="none"
             d={`M -${textRadius} 0 A ${textRadius} ${textRadius} 0 0 0 ${textRadius} 0`}
-            transform={`translate(${radius},${radius})`}
           />
           <Path id="sand" d="M0,180 C100,200 100,155 200,180 C200,180 200,185 200,200 L0,200 C0,183 0,180 0,175 Z" />
-          <Filter id="hand-shadow">
-            <FeDropShadow dx="0.5" dy="2" stdDeviation="1" floodColor="rgba(0,0,0,0.3)" />
-          </Filter>
-          <Filter id="layer-shadow">
-            <FeDropShadow dx="0" dy="-10" stdDeviation="10" floodColor="rgba(0,0,0,0.05)" />
-          </Filter>
         </Defs>
 
         <Path
           d={wavePath({ size, progress })}
           className="fill-[rgba(154,197,192)]"
           transform={`translate(0,${radius/2})`}
-          filter="url(#layer-shadow)"
         />
 
-        <G filter="url(#hand-shadow)">
+        <G>
           <Line
             strokeWidth={4}
             x1={radius}
@@ -76,24 +65,28 @@ export function TideClockWidget({ size = 200 }) {
             x2={radius}
             y2={radius}
             className="stroke-background"
-            transform={`rotate(${deg} ${radius} ${radius})`}
+            originX={radius}
+            originY={radius}
+            rotation={deg}
           />
           <Circle cx={radius} cy={radius} r={5} className="fill-background" />
         </G>
-
+{/*
         <G>
           <Use href="#sand" fill="#CBBD93" scaleX={-1} translateX={200} translateY={-5}  />
           <Use href="#sand" fill="#f3dfc1" />
         </G>
-
-        <Text className="fill-background uppercase font-medium tracking-widest opacity-75" fontSize={size*.05} textAnchor="middle">
-          <TextPath href="#highCurve" startOffset="50%" alignmentBaseline="middle">
-            High Tide
-          </TextPath>
-          <TextPath href="#lowCurve" startOffset="50%" alignmentBaseline="middle">
-            Low Tide
-          </TextPath>
-        </Text>
+ */}
+        <G transform={`translate(${radius}, ${radius})`}>
+          <Text className="fill-background uppercase font-medium tracking-widest opacity-75" fontSize={size*.05} textAnchor="middle">
+            <TextPath href="#highCurve" startOffset="50%" alignmentBaseline="middle">
+              High Tide
+            </TextPath>
+            <TextPath href="#lowCurve" startOffset="50%" alignmentBaseline="middle">
+              Low Tide
+            </TextPath>
+          </Text>
+        </G>
         <Circle cx={radius} cy={radius} r={radius} className="stroke-background fill-none" strokeWidth={radius*.1} />
       </Svg>
 

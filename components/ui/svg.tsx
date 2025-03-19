@@ -1,16 +1,16 @@
 import { cssInterop } from "nativewind";
-import { Svg, Text, Circle, Path, Rect, G } from "react-native-svg"
+import { Svg, Text, Circle, Path, Rect, G, Line } from "react-native-svg"
 
 export * from "react-native-svg";
 
 cssInterop(Svg, {
   className: {
     target: "style",
-    nativeStyleToProp: { width: true, height: true }
+    nativeStyleToProp: { width: true, height: true, color: true }
   },
 });
 
-[Circle, Rect, Path, G].forEach((Component) => {
+[Circle, Rect, Path, G, Line].forEach((Component) => {
   cssInterop(Component, {
     className: {
       target: "style",
@@ -24,7 +24,8 @@ cssInterop(Text, {
     target: "style",
     nativeStyleToProp: {
       fontSize: true,
-      color: true
+      color: true,
+      fill: true,
     },
   }
 });
