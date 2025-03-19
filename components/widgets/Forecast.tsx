@@ -110,8 +110,8 @@ export function SunWidget() {
           progress={progress || 0}
           startAngle={-Math.PI * 0.5}
           endAngle={Math.PI * 0.5}
-          style={ { width: 140, height: 140, marginBottom: -80 } }>
-        </ProgressCircle>
+          style={{ width: "50%", height: "50%", marginBottom: "-25%" }}
+        />
       </View>
 
       <View className="flex flex-row justify-between">
